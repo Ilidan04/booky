@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - book up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+                <div class="flex items-center">
+                    <img src="images/book.webp" alt="book up Logo" class="h-12 sm:h-10 md:h-12 w-auto object-contain">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Accueil</a>
+                    <a href="magazine.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Magazine</a>
+                    <a href="apropos.html" class="text-indigo-600 font-semibold border-b-2 border-indigo-600">À propos</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-indigo-600 font-medium transition">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+                <a href="index.html" class="block py-2 text-gray-700 hover:text-indigo-600">Accueil</a>
+                <a href="magazine.html" class="block py-2 text-gray-700 hover:text-indigo-600">Magazine</a>
+                <a href="apropos.html" class="block py-2 text-indigo-600 font-semibold">À propos</a>
+                <a href="index.html#contact" class="block py-2 text-gray-700 hover:text-indigo-600">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Image -->
+    <section class="relative h-96 md:h-[500px] overflow-hidden">
+        <img src="images/image.jpg" alt="À propos book up" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/70 to-purple-600/70"></div>
+        <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-white px-4">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">À Propos book up</h1>
+                <p class="text-lg sm:text-xl">Créer des livres éducatifs de qualité</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-16 sm:py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section with Image Left and Text Right (Notre Mission) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16">
+                <!-- Image Left -->
+                <div class="order-2 lg:order-1">
+                    <img src="images/image.jpg" alt="book up Team" class="w-full rounded-lg shadow-lg">
+                </div>
+
+                <!-- Text Right -->
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Notre Mission</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Nous croyons que l'éducation est le fondement d'un avenir meilleur. Notre mission est de mettre à disposition des ressources éducatives innovantes, accessibles et inspirantes qui aident chacun à développer son plein potentiel.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        Chaque livre que nous publions est le fruit d'une recherche minutieuse et d'une collaboration étroite avec des experts pédagogiques pour assurer son efficacité éducative.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="text-indigo-600 font-bold mr-3">✓</span>
+                            <span class="text-gray-600">Contenus adaptés à chaque âge</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-indigo-600 font-bold mr-3">✓</span>
+                            <span class="text-gray-600">Illustrations de qualité professionnelle</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-indigo-600 font-bold mr-3">✓</span>
+                            <span class="text-gray-600">Approche pédagogique innovante</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Values Section -->
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-8 lg:p-12">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 text-center">Nos Valeurs</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <div class="text-4xl font-bold text-indigo-600 mb-4">1</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Qualité</h3>
+                        <p class="text-gray-600">Nous garantissons des contenus de la plus haute qualité, vérifiés par des experts pédagogues.</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-indigo-600 mb-4">2</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Innovation</h3>
+                        <p class="text-gray-600">Nous intégrons les dernières méthodes pédagogiques et technologies éducatives.</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-indigo-600 mb-4">3</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Accessibilité</h3>
+                        <p class="text-gray-600">Nous rendons l'éducation accessible à tous, indépendamment des origines ou des moyens.</p>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-bold text-indigo-600 mb-4">4</div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Diversité</h3>
+                        <p class="text-gray-600">Nous célébrons et représentons les cultures et perspectives diverses du monde.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 sm:py-24 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Rejoignez Notre Communauté</h2>
+            <p class="text-lg text-gray-600 mb-8">
+                Découvrez notre collection complète de livres éducatifs et commencez votre voyage d'apprentissage aujourd'hui.
+            </p>
+            <a href="magazine.html" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg">
+                Voir Notre Magazine
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6 sm:py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400 text-sm sm:text-base">&copy; 2023 book up. Tous droits réservés.</p>
+            <p class="mt-2 text-gray-500 text-xs sm:text-sm">L'éducation est la clé de l'avenir</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>

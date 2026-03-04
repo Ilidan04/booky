@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails - ÉduLivres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+                <div class="flex items-center">
+                    <a href="index.html">
+                        <img src="images/book.webp" alt="bookup logo" class="h-12 w-auto"/>
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Accueil</a>
+                    <a href="magazine.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Magazine</a>
+                    <a href="apropos.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">À propos</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-indigo-600 font-medium transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="book-content">
+                <!-- Dynamic Content Goes Here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 to-indigo-900 text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <a href="index.html">
+                    <img src="images/logoo.png" alt="bookup logo" class="h-12 w-auto mx-auto mb-4"/>
+                </a>
+                <p class="text-xl text-indigo-200 mb-6">L'éducation est la clé de l'avenir</p>
+                <p class="text-gray-400">&copy; 2026 bookup. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const books = {
+            "Musculation": {
+                title: "Musculation",
+                pages: [
+                    { image: "1.jpg", video: "1-chest.mp4", title: "Chest", text: "Dumbbell Bench Press Overview\n\nThe dumbbell bench press is a variation of the barbell bench press and an exercise used to build the muscles of the chest.\n\nOften times, the dumbbell bench press is recommended after reaching a certain point of strength on the barbell bench press to avoid pec and shoulder injuries.\n\nAdditionally, the dumbbell bench press provides an ego check in the amount of weight used due to the need to maintain shoulder stability throughout the exercise.\n\nThe exercise itself can be featured as a main lift in your workouts or an accessory lift to the bench press depending on your goals.\n\nAperçu du développé couché avec haltères\n\nLe développé couché avec haltères est une variante du développé couché avec barre et un exercice utilisé pour développer les muscles de la poitrine.\n\nLe développé couché avec haltères est souvent recommandé après avoir atteint un certain niveau de force au développé couché avec barre afin d'éviter les blessures aux pectoraux et aux épaules.\n\nDe plus, le développé couché avec haltères permet de relativiser la quantité de poids utilisée, car il est nécessaire de maintenir la stabilité des épaules tout au long de l'exercice.\n\nCet exercice peut être intégré comme exercice principal de vos séances d'entraînement ou comme exercice accessoire au développé couché, selon vos objectifs." },
+                    { image: "2.jpg", video: "2-shoulder.mp4", title: "Shoulder", text: "Dumbbell Shoulder Press Overview\n\nThe dumbbell bench press is a variation of the barbell bench press and an exercise used to build the muscles of the chest and shoulders.\n\nOften times, the dumbbell bench press is recommended after reaching a certain point of strength on the barbell bench press to avoid pec and shoulder injuries.\n\nAdditionally, the dumbbell bench press provides an ego check in the amount of weight used due to the need to maintain shoulder stability throughout the exercise.\n\nThe exercise itself can be featured as a main lift in your workouts or an accessory lift to the bench press depending on your goals.\n\nAperçu du développé couché avec haltères\n\nLe développé couché avec haltères est une variante du développé couché avec barre et un exercice utilisé pour développer les muscles de la poitrine.\n\nLe développé couché avec haltères est souvent recommandé après avoir atteint un certain niveau de force au développé couché avec barre afin d'éviter les blessures aux pectoraux et aux épaules.\n\nDe plus, le développé couché avec haltères permet de relativiser la quantité de poids utilisée, car il est nécessaire de maintenir la stabilité des épaules tout au long de l'exercice." },
+                    { image: "3.jpg", video: "3-biceps.mp4", title: "Biceps", text: "Dumbbell Hammer Preacher Curl Overview\n\nThe preacher dumbbell hammer curl is a variation of the hammer curl and an exercise used to build bigger biceps.\n\nUtilizing the preacher set up while performing preacher dumbbell hammer curls promotes a fixed range of motion for the hammer curl, allowing for a more focused contraction on the biceps.\n\nWhen trying to build your biceps, using a wide range of exercises which focus on different ranges of motion is the best approach.\n\nAperçu du curl biceps au pupitre avec haltères marteau\n\nLe curl marteau avec haltères à la barre de pupitre est une variante du curl marteau et un exercice utilisé pour développer des biceps plus volumineux.\n\nL'utilisation d'un pupitre à biceps lors de l'exécution de flexions de biceps avec haltères favorise une amplitude de mouvement fixe pour le mouvement, permettant une contraction plus ciblée des biceps.\n\nPour développer ses biceps, la meilleure approche consiste à utiliser une grande variété d'exercices qui sollicitent différentes amplitudes de mouvement." },
+                    { image: "4.jpg", video: "4-back.mp4", title: "Back", text: "Bent Over Row Overview\n\nThe bent over row is a back day staple exercise and is considered one of the best muscle building back exercises you can do.\n\nSometimes referred to as the barbell row, the bent over row is a staple movement in most muscle building workouts. Those looking to build muscle utilize the bent over row to target their back, bicep and core muscles.\n\nThose in powerlifting and strength circles perform bent over rows to increase their strength on the big 3 movements.\n\nThe bent over row is typically used to build and strengthen the muscles of the upper back (latissimus dorsi, rhomboids, and trapezius). However, it requires assistance from muscles of the low back, core, and arms to perform a bent over row correctly.\n\nThere are several variations of the bent over row one can and should perform.\n\nAperçu du rowing buste penché\n\nLe rowing buste penché est un exercice de base pour les séances d'entraînement du dos et est considéré comme l'un des meilleurs exercices de musculation du dos que vous puissiez faire.\n\nParfois appelé rowing barre, le rowing buste penché est un exercice fondamental dans la plupart des programmes de musculation. Ceux qui cherchent à développer leur masse musculaire l'utilisent pour cibler le dos, les biceps et les muscles abdominaux.\n\nIl existe plusieurs variantes du rowing buste penché que l'on peut et doit effectuer." },
+                    { image: "5.jpg", video: "5-tricep.mp4", title: "Triceps", text: "Straight Bar Tricep Extension Overview\n\nThe straight bar tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.\n\nWell-built triceps also have a lot of positive carryover into your pressing movements such as bench press variations and shoulder press variations.\n\nThe straight bar tricep extension can be incorporated into your tricep workouts, upper body workouts, push workouts, and full body workouts.\n\nAperçu de l'extension des triceps à la barre droite\n\nL'extension des triceps à la barre droite est une variante de l'extension des triceps à la poulie et un exercice utilisé pour développer les muscles des triceps.\n\nDes triceps bien développés ont également un impact positif sur vos mouvements de poussée comme les variantes de développé couché et de développé militaire.\n\nL'extension des triceps à la barre droite peut être intégrée à vos séances d'entraînement des triceps, du haut du corps, de poussée et à vos séances d'entraînement complètes." },
+                    { image: "6.jpg", video: "6-forearm.mp4", title: "Forearm", text: "Plate Pinch Carry Overview\n\nThe plate pinch carry is a variation of the farmer's walk and an exercise used to strengthen the muscles of the forearms. They will also indirectly work the muscles of the core.\n\nOf all the loaded carries, the plate pinch carry is going to be one of the more challenging variations for the forearms.\n\nThe loaded carry exercise is a foundational movement and should be incorporated into your workout programs in some form.\n\nAperçu du port de plaque par pincement\n\nLe transport de poids en pinçant une assiette est une variante de la marche du fermier et un exercice utilisé pour renforcer les muscles des avant-bras. Il sollicite également indirectement les muscles du tronc.\n\nDe tous les types de port de charge, le port avec pincement de plaque sera l'une des variantes les plus exigeantes pour les avant-bras.\n\nL'exercice de transport de charges est un mouvement fondamental et devrait être intégré d'une manière ou d'une autre à vos programmes d'entraînement." },
+                    { image: "7.jpg", video: "7-abs.mp4", title: "Abs", text: "Lying Floor Leg Raise Overview\n\nThe lying floor leg raise is a variation of the abdominal crunch and an exercise used to isolate the muscles of the abdomen.\n\nThe lying floor leg raise is a flexion based exercise which keeps the lower abdominal muscles under constant tension during the entire range of motion.\n\nAperçu de l'élévation des jambes au sol en position couchée\n\nLe relevé de jambes au sol est une variante du crunch abdominal et un exercice utilisé pour isoler les muscles de l'abdomen.\n\nLe relevé de jambes au sol est un exercice basé sur la flexion qui maintient les muscles abdominaux inférieurs sous tension constante pendant toute l'amplitude de mouvement." },
+                    { image: "8.jpg", video: "8-quad.mp4", title: "Quads", text: "Dumbbell Goblet Squat Overview\n\nThe dumbbell goblet squat is a variation of the squat and an exercise used to build the muscles of the legs. In particular, the dumbbell goblet squat will place a lot of emphasis on the quads.\n\nThe squat movement pattern is a foundational movement and should be performed by most capable individuals throughout their lives. So, it is important to find a variation that is comfortable for you to perform, and continuously work on it.\n\nYou can include the dumbbell goblet squat in your leg workouts or full body workouts.\n\nAperçu du squat avec haltères et gobelet\n\nLe squat goblet avec haltères est une variante du squat et un exercice utilisé pour développer les muscles des jambes. Plus précisément, le squat goblet avec haltères sollicite fortement les quadriceps.\n\nLe squat est un mouvement fondamental que la plupart des personnes en bonne santé devraient pratiquer régulièrement tout au long de leur vie. Il est donc important de trouver une variante confortable et de la travailler régulièrement.\n\nVous pouvez inclure le squat goblet avec haltères dans vos séances d'entraînement des jambes ou de tout le corps." },
+                    { image: "9.jpeg", video: "9-hamst.mp4", title: "Hamstrings", text: "Seated Leg Curl Overview\n\nThe seated leg curl is a variation of the leg curl and an exercise used to isolate the hamstrings.\n\nThe seated leg curl is best used as part of your leg workout or in a full body workout routine.\n\nAperçu du leg curl assis\n\nLe leg curl assis est une variante du leg curl et un exercice utilisé pour isoler les ischio-jambiers.\n\nLe leg curl assis est idéal dans le cadre d'un entraînement des jambes ou d'une routine d'entraînement complète." },
+                    { image: "10.jpg", video: "10-calves.mp4", title: "Calves", text: "45 Degree Leg Press Calf Raise Overview\n\nThe leg press calf raise is a variation of the machine calf raise and an exercise used to build the muscles of the calves.\n\nThe calves can be a very stubborn muscle group, so it's important to target them with plenty of different angles and with a high training frequency.\n\nThis exercise can be incorporated into your leg days or full body days.\n\nPrésentation de l'exercice de presse à jambes à 45 degrés pour les mollets\n\nLe leg press calf raise est une variante du leg press calf raise à la machine et un exercice utilisé pour développer les muscles des mollets.\n\nLes mollets peuvent être un groupe musculaire très résistant, il est donc important de les solliciter sous différents angles et avec une fréquence d'entraînement élevée.\n\nCet exercice peut être intégré à vos séances d'entraînement des jambes ou de tout le corps." },
+                    { image: "11.jpg", video: "11-glutes.mp4", title: "Glutes", text: "Glute Kick Back Overview\n\nThe quadruped hip extension, commonly referred to as the glute kick back, is an exercise used to isolate the glute muscles. It is also an excellent option to use as an activation drill to warm up the glutes.\n\nThey are also referred to as the donkey kick, because when you perform them you look like a donkey kicking with their hind leg.\n\nAperçu du Glute Kick Back\n\nL'extension de hanche à quatre pattes, aussi appelée extension fessière arrière, est un exercice permettant d'isoler les muscles fessiers. C'est également un excellent exercice d'activation pour échauffer ces muscles.\n\nOn les appelle aussi le coup de pied de l'âne, car lorsqu'on les exécute, on ressemble à un âne qui donne un coup de pied avec sa patte arrière." }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookTitle = urlParams.get('book');
+            const book = books[bookTitle];
+            const contentDiv = document.getElementById('book-content');
+
+            if (book) {
+                let currentIndex = 0;
+
+                const imageGalleryHTML = `
+                    <div class="relative">
+                        <img id="gallery-image" src="books/musculation/imago/${book.pages[currentIndex].image}" alt="${book.pages[currentIndex].title}" class="w-full h-auto object-cover rounded-lg shadow-lg">
+                        <div class="absolute inset-0 flex justify-between items-center">
+                            <button id="prev-image" aria-label="Previous" class="bg-black bg-opacity-50 text-white p-2 rounded-full">&lt;</button>
+                            <button id="next-image" aria-label="Next" class="bg-black bg-opacity-50 text-white p-2 rounded-full">&gt;</button>
+                        </div>
+                    </div>
+                `;
+
+                const videoPlayerHTML = `
+                    <div class="relative mt-8">
+                        <video id="video-player" class="w-full rounded-lg shadow-lg" controls>
+                            <source id="video-source" src="books/musculation/video/${book.pages[currentIndex].video}" type="video/mp4">
+                            Votre navigateur ne supporte pas la balise vidéo.
+                        </video>
+                    </div>
+                    <div class="mt-6 flex flex-wrap gap-2" id="pagination">
+                        ${book.pages.map((p, i) => `
+                            <button data-index="${i}" class="pagination-btn px-3 py-1 rounded-full text-sm font-semibold transition ${i === 0 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-indigo-100'}">
+                                ${i + 1}
+                            </button>`).join('')}
+                    </div>
+                `;
+
+                const textContentHTML = `
+                    <div class="bg-white p-8 rounded-lg shadow-lg">
+                        <h1 class="text-4xl font-extrabold text-gray-900 mb-6" id="content-title">${book.pages[currentIndex].title}</h1>
+                        <div id="text-body" class="prose prose-lg max-w-none text-gray-700 space-y-3"></div>
+                    </div>`;
+
+                contentDiv.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                        <div class="space-y-8">
+                            ${imageGalleryHTML}
+                            ${videoPlayerHTML}
+                        </div>
+                        ${textContentHTML}
+                    </div>`;
+
+                const galleryImage = document.getElementById('gallery-image');
+                const videoPlayer = document.getElementById('video-player');
+                const videoSource = document.getElementById('video-source');
+                const contentTitle = document.getElementById('content-title');
+                const textBody = document.getElementById('text-body');
+
+                function renderText(text) {
+                    return text.split('\n\n').map(p => `<p>${p.replace(/\n/g, ' ')}</p>`).join('');
+                }
+
+                textBody.innerHTML = renderText(book.pages[0].text);
+
+                function updateContent(index) {
+                    currentIndex = index;
+                    const page = book.pages[currentIndex];
+                    galleryImage.src = `books/musculation/imago/${page.image}`;
+                    galleryImage.alt = page.title;
+                    videoSource.src = `books/musculation/video/${page.video}`;
+                    contentTitle.textContent = page.title;
+                    textBody.innerHTML = renderText(page.text);
+                    videoPlayer.load();
+                    videoPlayer.play();
+                    document.querySelectorAll('.pagination-btn').forEach((btn, i) => {
+                        btn.className = `pagination-btn px-3 py-1 rounded-full text-sm font-semibold transition ${i === currentIndex ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-indigo-100'}`;
+                    });
+                }
+
+                document.getElementById('prev-image').addEventListener('click', () => updateContent((currentIndex - 1 + book.pages.length) % book.pages.length));
+                document.getElementById('next-image').addEventListener('click', () => updateContent((currentIndex + 1) % book.pages.length));
+                document.getElementById('pagination').addEventListener('click', e => {
+                    const btn = e.target.closest('.pagination-btn');
+                    if (btn) updateContent(parseInt(btn.dataset.index));
+                });
+
+            } else {
+                contentDiv.innerHTML = '<p class="text-center text-xl">Livre non trouvé.</p>';
+            }
+        });
+    </script>
+</body>
+</html>

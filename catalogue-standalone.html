@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalogue - ÉduLivres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .book-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-indigo-600">📚 ÉduLivres</h1>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium">Accueil</a>
+                    <a href="catalogue.html" class="text-indigo-600 font-medium border-b-2 border-indigo-600">Catalogue</a>
+                    <a href="index.html#about" class="text-gray-700 hover:text-indigo-600 font-medium">À propos</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-indigo-600 font-medium">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-4">Notre Catalogue de Livres</h2>
+            <p class="text-xl">Découvrez notre collection de livres éducatifs pour tous les âges</p>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="py-8 bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Search by Name -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rechercher par nom</label>
+                    <input type="text" id="searchName" placeholder="Nom du livre..."
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                </div>
+
+                <!-- Filter by Age -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Âge</label>
+                    <select id="filterAge" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="">Tous les âges</option>
+                        <option value="3-6 ans">3-6 ans</option>
+                        <option value="7-10 ans">7-10 ans</option>
+                        <option value="11-14 ans">11-14 ans</option>
+                        <option value="15-18 ans">15-18 ans</option>
+                    </select>
+                </div>
+
+                <!-- Filter by Category -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Catégorie</label>
+                    <select id="filterCategory" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="">Toutes les catégories</option>
+                    </select>
+                </div>
+
+                <!-- Filter by Year -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Année</label>
+                    <select id="filterYear" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        <option value="">Toutes les années</option>
+                    </select>
+                </div>
+
+                <!-- Reset Button -->
+                <div class="flex items-end">
+                    <button id="resetFilters" class="w-full bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-300">
+                        Réinitialiser
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Count -->
+            <div class="mt-4 text-center">
+                <p class="text-gray-600" id="resultsCount">Chargement des livres...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="booksGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Books will be inserted here by JavaScript -->
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="hidden text-center py-12">
+                <div class="text-6xl mb-4">📚</div>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-2">Aucun livre trouvé</h3>
+                <p class="text-gray-500">Essayez de modifier vos critères de recherche</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2023 ÉduLivres. Tous droits réservés.</p>
+            <p class="mt-2 text-gray-400">L'éducation est la clé de l'avenir</p>
+        </div>
+    </footer>
+
+    <script>
+        // Données embarquées (version standalone)
+        const booksData = [
+            {titre: "Les Aventures de Tim", auteur: "Sophie Martin", annee: "2023", categorie: "Fiction", age: "3-6 ans", description: "Un voyage magique à travers la forêt enchantée avec Tim et ses amis animaux"},
+            {titre: "Mathématiques Amusantes", auteur: "Jean Dupont", annee: "2022", categorie: "Éducatif", age: "7-10 ans", description: "Apprendre les mathématiques de manière ludique avec des exercices interactifs"},
+            {titre: "L'Histoire du Monde", auteur: "Marie Leroux", annee: "2023", categorie: "Histoire", age: "11-14 ans", description: "Découvrez l'histoire fascinante de notre monde, de la préhistoire à nos jours"},
+            {titre: "Sciences pour les Curieux", auteur: "Pierre Dubois", annee: "2021", categorie: "Science", age: "7-10 ans", description: "Expériences scientifiques simples et amusantes pour jeunes explorateurs"},
+            {titre: "Contes et Légendes", auteur: "Emma Bernard", annee: "2023", categorie: "Fiction", age: "3-6 ans", description: "Recueil de contes classiques revisités pour les plus petits"},
+            {titre: "Grammaire Facile", auteur: "Claire Morel", annee: "2022", categorie: "Éducatif", age: "11-14 ans", description: "Maîtriser la grammaire française avec des méthodes simples et efficaces"},
+            {titre: "Le Monde des Dinosaures", auteur: "Luc Richard", annee: "2023", categorie: "Science", age: "7-10 ans", description: "Voyage dans le temps pour découvrir les dinosaures et leur époque"},
+            {titre: "Poésie pour Enfants", auteur: "Alice Petit", annee: "2022", categorie: "Littérature", age: "3-6 ans", description: "Recueil de poèmes courts et illustrés pour les jeunes lecteurs"},
+            {titre: "Géographie Interactive", auteur: "Marc Laurent", annee: "2021", categorie: "Géographie", age: "11-14 ans", description: "Explorez les continents, pays et cultures du monde entier"},
+            {titre: "Anglais pour Débutants", auteur: "Sarah Jones", annee: "2023", categorie: "Langues", age: "7-10 ans", description: "Premiers pas en anglais avec des dialogues et exercices amusants"},
+            {titre: "Warcraft History (Audio)", auteur: "Narrateur", annee: "2024", categorie: "Langues", age: "7-10 ans", description: "Version audio en anglais simple — Warcraft History", format: "audio", audioSrc: "audio/warcraft-history.mp3"},
+            {titre: "Art et Créativité", auteur: "Julie Blanc", annee: "2022", categorie: "Art", age: "3-6 ans", description: "Activités artistiques et créatives pour développer l'imagination"},
+            {titre: "Physique Accessible", auteur: "Thomas Girard", annee: "2023", categorie: "Science", age: "15-18 ans", description: "Comprendre les principes de la physique avec des exemples concrets"},
+            {titre: "La Vie des Animaux", auteur: "Charlotte Roux", annee: "2022", categorie: "Nature", age: "7-10 ans", description: "Découvrez la vie fascinante des animaux de tous les continents"},
+            {titre: "Philosophie pour Ados", auteur: "Antoine Mercier", annee: "2021", categorie: "Philosophie", age: "15-18 ans", description: "Introduction à la philosophie avec des questions du quotidien"},
+            {titre: "Cuisine pour Enfants", auteur: "Isabelle Vincent", annee: "2023", categorie: "Pratique", age: "7-10 ans", description: "Recettes simples et délicieuses à réaliser en famille"}
+        ];
+
+        let allBooks = [...booksData];
+        let filteredBooks = [...booksData];
+
+        // Category icons mapping
+        const categoryIcons = {
+            'Fiction': '📖',
+            'Éducatif': '🧮',
+            'Histoire': '📜',
+            'Science': '🔬',
+            'Littérature': '✍️',
+            'Géographie': '🌍',
+            'Langues': '🗣️',
+            'Art': '🎨',
+            'Nature': '🌿',
+            'Philosophie': '💭',
+            'Pratique': '👨‍🍳'
+        };
+
+        // Populate filter dropdowns
+        function populateFilters() {
+            const categories = [...new Set(allBooks.map(book => book.categorie))].sort();
+            const years = [...new Set(allBooks.map(book => book.annee))].sort((a, b) => b - a);
+
+            const categorySelect = document.getElementById('filterCategory');
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat;
+                categorySelect.appendChild(option);
+            });
+
+            const yearSelect = document.getElementById('filterYear');
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            });
+        }
+
+        // Display books
+        function displayBooks() {
+            const grid = document.getElementById('booksGrid');
+            const noResults = document.getElementById('noResults');
+            const resultsCount = document.getElementById('resultsCount');
+
+            grid.innerHTML = '';
+
+            if (filteredBooks.length === 0) {
+                grid.classList.add('hidden');
+                noResults.classList.remove('hidden');
+                resultsCount.textContent = 'Aucun livre trouvé';
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            noResults.classList.add('hidden');
+            resultsCount.textContent = `${filteredBooks.length} livre(s) trouvé(s)`;
+
+            filteredBooks.forEach(book => {
+                const bookCard = document.createElement('div');
+
+                if (book.format && book.format.toLowerCase() === 'audio') {
+                    bookCard.className = 'book-card bg-gradient-to-r from-yellow-50 to-white rounded-lg shadow-md p-6 border-l-4 border-yellow-400';
+                    const icon = '🔊';
+                    bookCard.innerHTML = `
+                        <div class="flex items-start mb-4">
+                            <div class="text-4xl mr-4">${icon}</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 mb-1">${book.titre}</h3>
+                                <p class="text-sm text-gray-600">par ${book.auteur} · Audio · ${book.annee}</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">${book.description}</p>
+                        <div class="flex items-center gap-3">
+                            <button class="play-audio inline-flex items-center px-4 py-2 bg-yellow-500 text-white rounded-lg shadow">
+                                ▶️ Lire l'audio
+                            </button>
+                            <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-semibold">${book.categorie}</span>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-semibold">${book.age}</span>
+                        </div>
+                    `;
+                    bookCard.dataset.audioSrc = book.audioSrc || '';
+                } else {
+                    bookCard.className = 'book-card bg-white rounded-lg shadow-md p-6';
+                    const icon = categoryIcons[book.categorie] || '📚';
+                    bookCard.innerHTML = `
+                        <div class="flex items-start mb-4">
+                            <div class="text-4xl mr-4">${icon}</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 mb-1">${book.titre}</h3>
+                                <p class="text-sm text-gray-600">par ${book.auteur}</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 mb-4">${book.description}</p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="inline-block bg-indigo-100 text-indigo-800 text-xs px-3 py-1 rounded-full font-semibold">${book.categorie}</span>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full font-semibold">${book.age}</span>
+                            <span class="inline-block bg-purple-100 text-purple-800 text-xs px-3 py-1 rounded-full font-semibold">${book.annee}</span>
+                        </div>
+                    `;
+                }
+
+                grid.appendChild(bookCard);
+            });
+        }
+
+        // Apply filters
+        function applyFilters() {
+            const searchName = document.getElementById('searchName').value.toLowerCase();
+            const filterAge = document.getElementById('filterAge').value;
+            const filterCategory = document.getElementById('filterCategory').value;
+            const filterYear = document.getElementById('filterYear').value;
+
+            filteredBooks = allBooks.filter(book => {
+                const matchesName = book.titre.toLowerCase().includes(searchName);
+                const matchesAge = !filterAge || book.age === filterAge;
+                const matchesCategory = !filterCategory || book.categorie === filterCategory;
+                const matchesYear = !filterYear || book.annee === filterYear;
+
+                return matchesName && matchesAge && matchesCategory && matchesYear;
+            });
+
+            displayBooks();
+        }
+
+        // Simple audio play handler
+        document.addEventListener('click', function(e){
+            const btn = e.target.closest && e.target.closest('.play-audio');
+            if (!btn) return;
+            const card = btn.closest('.book-card');
+            const src = card && card.dataset && card.dataset.audioSrc;
+            if (!src) {
+                alert("Audio non disponible pour cet élément.");
+                return;
+            }
+            let player = document.getElementById('globalAudioPlayer');
+            if (!player) {
+                player = document.createElement('audio');
+                player.id = 'globalAudioPlayer';
+                document.body.appendChild(player);
+            }
+            if (player.src !== src) player.src = src;
+            player.play().catch(()=>{ alert('Impossible de lire le fichier audio (fichier absent).'); });
+        });
+
+        // Reset filters
+        function resetFilters() {
+            document.getElementById('searchName').value = '';
+            document.getElementById('filterAge').value = '';
+            document.getElementById('filterCategory').value = '';
+            document.getElementById('filterYear').value = '';
+            filteredBooks = [...allBooks];
+            displayBooks();
+        }
+
+        // Event listeners
+        document.getElementById('searchName').addEventListener('input', applyFilters);
+        document.getElementById('filterAge').addEventListener('change', applyFilters);
+        document.getElementById('filterCategory').addEventListener('change', applyFilters);
+        document.getElementById('filterYear').addEventListener('change', applyFilters);
+        document.getElementById('resetFilters').addEventListener('click', resetFilters);
+
+        // Initialize on page load
+        populateFilters();
+        displayBooks();
+    </script>
+</body>
+</html>
