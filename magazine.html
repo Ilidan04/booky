@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magazine - ÉduLivres</title>
+    <title>Magazine - Bookup</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -219,10 +219,10 @@
 
                 const bookCard = document.createElement('div');
                 if (book.format && book.format.toLowerCase() === 'image') {
-                    bookCard.className = 'book-card bg-white rounded-lg shadow-md overflow-hidden h-full';
+                    bookCard.className = 'book-card bg-white rounded-lg shadow-md overflow-hidden h-full flex';
                     bookCard.innerHTML = `
-                        <img src="${book.imageSrc}" alt="${book.titre}" class="w-full h-48 object-contain bg-gray-100">
-                        <div class="p-6">
+                        <img src="${book.imageSrc}" alt="${book.titre}" class="w-40 object-contain bg-gray-100 flex-shrink-0">
+                        <div class="p-6 flex flex-col justify-center">
                             <h3 class="text-xl font-bold text-gray-900 mb-2">${book.titre}</h3>
                             <p class="text-gray-700 mb-4">${book.description}</p>
                             <div class="flex flex-wrap gap-2">
