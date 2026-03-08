@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Livre - ÉduLivres</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+                <div class="flex items-center">
+                    <img src="images/book.webp" alt="bookup logo" class="h-12 w-auto"/>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Accueil</a>
+                    <a href="magazine.html" class="text-indigo-600 font-semibold border-b-2 border-indigo-600">Magazine</a>
+                    <a href="apropos.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">À propos</a>
+                    <a href="index.html#contact" class="text-gray-700 hover:text-indigo-600 font-medium transition">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Book Details Section -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="bookTitle" class="text-3xl sm:text-4xl font-bold text-center mb-8"></h2>
+
+            <!-- Image Viewer -->
+            <div class="mb-8">
+                <img id="bookPageImage" src="" alt="Page du livre" class="w-full max-w-4xl mx-auto rounded-lg shadow-lg">
+            </div>
+
+            <!-- Audio Player Section -->
+            <div id="audioSection" class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div id="audioLeft">
+                        <h3 class="text-xl font-semibold mb-2">En français</h3>
+                        <audio id="audioFrLeft" controls class="w-full mb-4"></audio>
+                        <h3 class="text-xl font-semibold mb-2">In English</h3>
+                        <audio id="audioEnLeft" controls class="w-full"></audio>
+                    </div>
+                    <div id="audioRight">
+                        <h3 class="text-xl font-semibold mb-2">En français</h3>
+                        <audio id="audioFrRight" controls class="w-full mb-4"></audio>
+                        <h3 class="text-xl font-semibold mb-2">In English</h3>
+                        <audio id="audioEnRight" controls class="w-full"></audio>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div id="pagination" class="flex justify-center items-center mt-8"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-gray-900 to-indigo-900 text-white py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <img src="images/logoo.png" alt="bookup logo" class="h-12 w-auto mx-auto mb-4"/>
+            <p class="text-xl text-indigo-200 mb-6">L'éducation est la clé de l'avenir</p>
+            <p class="text-gray-400">&copy; 2026 bookup. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        const bookData = {
+            "Le réveillon du nouvel an": {
+                pages: 6,
+                audio_count: 10
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookTitle = urlParams.get('book');
+            let currentPage = parseInt(urlParams.get('page')) || 1;
+
+            const book = bookData[bookTitle];
+            if (!book) {
+                // Handle book not found
+                document.getElementById('bookTitle').textContent = "Livre non trouvé";
+                return;
+            }
+
+            document.getElementById('bookTitle').textContent = bookTitle;
+
+            function displayPage(page) {
+                // Update Image
+                const pageImage = document.getElementById('bookPageImage');
+                pageImage.src = `books/Histoire/pages/${page}.jpg`;
+
+                // Update Audio
+                const audioSection = document.getElementById('audioSection');
+                const audioFrLeft = document.getElementById('audioFrLeft');
+                const audioEnLeft = document.getElementById('audioEnLeft');
+                const audioFrRight = document.getElementById('audioFrRight');
+                const audioEnRight = document.getElementById('audioEnRight');
+
+                const audioIndexStart = (page - 1) * 2 + 1;
+                
+                if (audioIndexStart <= book.audio_count) {
+                    audioSection.style.display = 'block';
+
+                    audioFrLeft.src = `books/Histoire/vocal/${audioIndexStart}.mp3`;
+                    audioEnLeft.src = `books/Histoire/vocal/${audioIndexStart}.1.mp3`;
+
+                    if (audioIndexStart + 1 <= book.audio_count) {
+                        document.getElementById('audioRight').style.display = 'block';
+                        audioFrRight.src = `books/Histoire/vocal/${audioIndexStart + 1}.mp3`;
+                        audioEnRight.src = `books/Histoire/vocal/${audioIndexStart + 1}.1.mp3`;
+                    } else {
+                        document.getElementById('audioRight').style.display = 'none';
+                    }
+                } else {
+                    audioSection.style.display = 'none';
+                }
+                
+                // Update URL without reloading
+                const newUrl = `${window.location.pathname}?book=${encodeURIComponent(bookTitle)}&page=${page}`;
+                window.history.pushState({path: newUrl}, '', newUrl);
+
+                renderPagination(page);
+            }
+
+            function renderPagination(activePage) {
+                const paginationContainer = document.getElementById('pagination');
+                paginationContainer.innerHTML = '';
+
+                // Previous Button
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Précédent';
+                prevButton.className = 'mx-1 px-4 py-2 rounded bg-gray-200';
+                if (activePage === 1) {
+                    prevButton.disabled = true;
+                    prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayPage(currentPage);
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+
+                // Page numbers
+                for (let i = 1; i <= book.pages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    pageButton.className = `mx-1 px-4 py-2 rounded ${i === activePage ? 'bg-indigo-600 text-white' : 'bg-gray-200'}`;
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        displayPage(i);
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+
+                // Next Button
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'Suivant';
+                nextButton.className = 'mx-1 px-4 py-2 rounded bg-gray-200';
+                if (activePage === book.pages) {
+                    nextButton.disabled = true;
+                    nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < book.pages) {
+                        currentPage++;
+                        displayPage(currentPage);
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            }
+
+            displayPage(currentPage);
+        });
+    </script>
+</body>
+</html>
