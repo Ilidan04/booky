@@ -5,23 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookup - Éditeur de Livres Éducatifs</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        /* Slide animation for homepage when selecting a category */
+        :root {
+            --cream:       #F7F1E8;
+            --amber-light: #EDD9A3;
+            --amber:       #C8973A;
+            --brown-dark:  #2C1A0E;
+            --navy:        #0B1728;
+            --navy-mid:    #152540;
+            --navy-light:  #1E3459;
+            --gold:        #D4A853;
+            --slate-text:  #94A3B8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            margin: 0;
+            background: #fff;
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ── Slide animation (unchanged logic) ── */
         .homepage-slide-container {
             transition: transform 600ms cubic-bezier(.2,.9,.2,1);
             will-change: transform;
         }
-        .slide-left {
-            transform: translateX(-40%);
-        }
-        .slide-right {
-            transform: translateX(40%);
-        }
-        /* A subtle overlay while animating */
+        .slide-left  { transform: translateX(-40%); }
+        .slide-right { transform: translateX(40%); }
         .slide-overlay {
-            position: fixed;
-            inset: 0;
+            position: fixed; inset: 0;
             background: rgba(8,15,24,0.35);
             opacity: 0;
             transition: opacity 300ms ease;
@@ -29,78 +47,255 @@
             z-index: 60;
         }
         .slide-overlay.active { opacity: 1; pointer-events: auto; }
-    </style>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+
+        /* ── Nav ── */
+        .nav-link {
+            font-size: .875rem;
+            font-weight: 500;
+            color: #374151;
+            text-decoration: none;
+            letter-spacing: .02em;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+            transition: color .2s, border-color .2s;
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .nav-link:hover, .nav-link.active {
+            color: var(--amber);
+            border-bottom-color: var(--amber);
         }
-        .split-section {
+
+        /* ── Split panels ── */
+        .panel {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 3rem 1.5rem;
+            padding: 5rem 3rem;
+            position: relative;
+            overflow: hidden;
         }
         @media (max-width: 768px) {
-            .split-section {
-                min-height: auto;
-                padding: 3rem 1.5rem;
-            }
+            .panel { min-height: auto; padding: 4rem 1.75rem; }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+
+        /* Left panel — parchment */
+        .panel-children {
+            background-color: var(--cream);
         }
-        .float-animation {
-            animation: float 3s ease-in-out infinite;
+        .panel-children::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 70% 60% at 85% 20%, rgba(200,151,58,.18) 0%, transparent 65%),
+                radial-gradient(ellipse 50% 50% at 10% 90%, rgba(237,217,163,.35) 0%, transparent 60%);
+            pointer-events: none;
         }
-        @keyframes bounce-slow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        /* subtle grain */
+        .panel-children::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+            opacity: .5;
+            pointer-events: none;
         }
-        .bounce-slow {
-            animation: bounce-slow 2s ease-in-out infinite;
+
+        /* Right panel — deep navy */
+        .panel-sport {
+            background-color: var(--navy);
         }
-        .hover-grow {
-            transition: transform 0.3s ease;
+        .panel-sport::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 15% 15%, rgba(212,168,83,.12) 0%, transparent 60%),
+                radial-gradient(ellipse 70% 60% at 90% 85%, rgba(30,52,89,.8) 0%, transparent 65%);
+            pointer-events: none;
         }
-        .hover-grow:hover {
-            transform: scale(1.05);
+
+        /* Decorative corner rule */
+        .corner-rule {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
         }
-        .mobile-menu {
-            display: none;
+        .corner-rule-tl { top: 2rem; left: 2rem; border-top: 1.5px solid; border-left: 1.5px solid; }
+        .corner-rule-br { bottom: 2rem; right: 2rem; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+        /* Panel headings */
+        .panel-heading {
+            font-family: 'Playfair Display', serif;
+            font-weight: 900;
+            line-height: 1.08;
+            letter-spacing: -.02em;
         }
-        .mobile-menu.active {
-            display: block;
+
+        /* Feature pills */
+        .pill {
+            display: inline-block;
+            font-size: .72rem;
+            font-weight: 600;
+            letter-spacing: .07em;
+            text-transform: uppercase;
+            padding: .3rem .85rem;
+            border-radius: 999px;
+            border: 1px solid;
+        }
+        .pill-amber {
+            color: var(--amber);
+            border-color: rgba(200,151,58,.45);
+            background: rgba(200,151,58,.07);
+        }
+        .pill-white {
+            color: rgba(255,255,255,.75);
+            border-color: rgba(255,255,255,.2);
+            background: rgba(255,255,255,.06);
+        }
+
+        /* CTA buttons */
+        .btn-amber {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            background: var(--amber);
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            padding: .85rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            transition: background .25s, transform .25s, box-shadow .25s;
+            box-shadow: 0 4px 20px rgba(200,151,58,.3);
+        }
+        .btn-amber:hover {
+            background: #b8832a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(200,151,58,.4);
+        }
+        .btn-outline-white {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            background: transparent;
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .04em;
+            padding: .85rem 2rem;
+            border-radius: 4px;
+            border: 1.5px solid rgba(255,255,255,.45);
+            text-decoration: none;
+            transition: background .25s, border-color .25s, transform .25s;
+        }
+        .btn-outline-white:hover {
+            background: rgba(255,255,255,.1);
+            border-color: rgba(255,255,255,.8);
+            transform: translateY(-2px);
+        }
+
+        /* Thin horizontal divider with diamond */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 2.5rem auto;
+            max-width: 280px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #D1C4B0;
+        }
+        .divider-diamond {
+            width: 7px;
+            height: 7px;
+            background: var(--amber);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+        }
+
+        /* Contact cards */
+        .contact-card {
+            background: #fff;
+            border: 1px solid #EAE4DA;
+            border-radius: 10px;
+            padding: 2rem 1.75rem;
+            text-align: center;
+            transition: box-shadow .25s, transform .25s;
+        }
+        .contact-card:hover {
+            box-shadow: 0 8px 30px rgba(44,26,14,.08);
+            transform: translateY(-3px);
+        }
+        .contact-icon-wrap {
+            width: 48px; height: 48px;
+            background: rgba(200,151,58,.1);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        /* Mobile menu */
+        .mobile-menu { display: none; }
+        .mobile-menu.active { display: block; }
+
+        /* Page-load fade-in */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(22px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .fade-up { animation: fadeUp .7s cubic-bezier(.22,.68,0,1) both; }
+        .delay-1 { animation-delay: .12s; }
+        .delay-2 { animation-delay: .24s; }
+        .delay-3 { animation-delay: .38s; }
+        .delay-4 { animation-delay: .52s; }
+
+        /* Book spine decorative element */
+        .book-spines {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            padding: 0 2.5rem 0 0;
+            opacity: .18;
+            pointer-events: none;
+        }
+        .spine {
+            width: 18px;
+            border-radius: 3px 3px 0 0;
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
+<body>
+
+    <!-- ── Navigation ── -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50" style="box-shadow: 0 1px 12px rgba(0,0,0,.06);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 md:h-20 items-center">
+            <div class="flex justify-between h-16 md:h-18 items-center" style="height:4.25rem;">
                 <div class="flex items-center">
-                    <img src="images/book.webp" alt="bookup Logo" class="h-12 sm:h-10 md:h-12 w-auto object-contain">
+                    <img src="images/book.webp" alt="Bookup Logo" class="h-10 w-auto object-contain">
                 </div>
 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="index.html" class="text-indigo-600 font-semibold border-b-2 border-indigo-600">Accueil</a>
-                    <a href="magazine.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">Magazine</a>
-                    <a href="apropos.html" class="text-gray-700 hover:text-indigo-600 font-medium transition">À propos</a>
-                    <a href="#contact" class="text-gray-700 hover:text-indigo-600 font-medium transition">Contact</a>
+                <!-- Desktop links -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="index.html"    class="nav-link active">Accueil</a>
+                    <a href="magazine.html" class="nav-link">Magazine</a>
+                    <a href="apropos.html"  class="nav-link">À propos</a>
+                    <a href="#contact"      class="nav-link">Contact</a>
                 </div>
 
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-button" class="text-gray-700 hover:text-indigo-600 focus:outline-none">
+                <!-- Mobile hamburger -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-amber-600 focus:outline-none" style="color:#555;">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
@@ -108,187 +303,200 @@
                 </div>
             </div>
 
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
-                <a href="index.html" class="block py-2 text-indigo-600 font-semibold">Accueil</a>
-                <a href="magazine.html" class="block py-2 text-gray-700 hover:text-indigo-600">Magazine</a>
-                <a href="apropos.html" class="block py-2 text-gray-700 hover:text-indigo-600">À propos</a>
-                <a href="#contact" class="block py-2 text-gray-700 hover:text-indigo-600">Contact</a>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4 border-t border-gray-100">
+                <a href="index.html"    class="block py-2.5 text-sm font-medium text-amber-600">Accueil</a>
+                <a href="magazine.html" class="block py-2.5 text-sm font-medium text-gray-600 hover:text-amber-600">Magazine</a>
+                <a href="apropos.html"  class="block py-2.5 text-sm font-medium text-gray-600 hover:text-amber-600">À propos</a>
+                <a href="#contact"      class="block py-2.5 text-sm font-medium text-gray-600 hover:text-amber-600">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Section Split - Enfants / Adultes -->
+    <!-- ── Split Hero ── -->
     <section class="grid grid-cols-1 lg:grid-cols-2">
-        <!-- Partie Enfants -->
-        <div class="split-section bg-gradient-to-br from-yellow-300 via-orange-300 to-pink-400 relative overflow-hidden">
-            <!-- Decorative Elements -->
-            <div class="absolute inset-0 opacity-20">
-                <div class="absolute top-10 left-10 sm:top-20 sm:left-20 text-6xl sm:text-8xl float-animation">🎨</div>
-                <div class="absolute bottom-10 right-10 sm:bottom-20 sm:right-20 text-5xl sm:text-7xl float-animation" style="animation-delay: 1s;">🚀</div>
-                <div class="absolute top-20 right-20 sm:top-40 sm:right-40 text-4xl sm:text-6xl float-animation" style="animation-delay: 0.5s;">⭐</div>
-                <div class="absolute bottom-20 left-20 sm:bottom-40 sm:left-40 text-4xl sm:text-6xl float-animation" style="animation-delay: 1.5s;">🎈</div>
+
+        <!-- Left — Children -->
+        <div class="panel panel-children">
+            <!-- Corner ornaments -->
+            <div class="corner-rule corner-rule-tl" style="color: rgba(200,151,58,.35);"></div>
+            <div class="corner-rule corner-rule-br" style="color: rgba(200,151,58,.25);"></div>
+
+            <!-- Decorative book spines -->
+            <div class="book-spines">
+                <div class="spine bg-amber-300" style="height:160px;"></div>
+                <div class="spine bg-orange-400" style="height:210px;width:22px;"></div>
+                <div class="spine bg-yellow-500" style="height:140px;"></div>
+                <div class="spine bg-amber-500" style="height:185px;width:14px;"></div>
+                <div class="spine bg-orange-300" style="height:120px;width:20px;"></div>
             </div>
 
-            <div class="relative z-10 text-center px-4 sm:px-6 max-w-2xl mx-auto">
-                <div class="text-6xl sm:text-8xl mb-4 sm:mb-6 bounce-slow">👶</div>
-                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight">
-                    Livres pour<br>Enfants
-                </h2>
-                <p class="text-base sm:text-lg lg:text-xl text-white font-light leading-relaxed mb-4 sm:mb-6">
-                    Éveillez la curiosité des plus jeunes avec nos histoires captivantes et contenus éducatifs
+            <div class="relative z-10 max-w-lg fade-up">
+                <!-- Overline label -->
+                <p class="text-xs font-semibold tracking-widest uppercase mb-5" style="color: var(--amber); letter-spacing:.18em;">
+                    Collection Jeunesse
                 </p>
-                <div class="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 justify-center">
-                    <span class="bg-white bg-opacity-30 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">3-6 ans</span>
-                    <span class="bg-white bg-opacity-30 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">7-10 ans</span>
-                    <span class="bg-white bg-opacity-30 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">11-14 ans</span>
+
+                <h2 class="panel-heading text-5xl sm:text-6xl lg:text-7xl mb-6" style="color: var(--brown-dark);">
+                    Livres<br><em>pour</em><br>Enfants
+                </h2>
+
+                <p class="text-base leading-relaxed mb-7 delay-1 fade-up" style="color: #5C4033; max-width:38ch; font-weight:400;">
+                    Éveillez la curiosité des plus jeunes avec des histoires captivantes et des contenus éducatifs conçus par des pédagogues.
+                </p>
+
+                <!-- Pills -->
+                <div class="flex flex-wrap gap-2 mb-8 delay-2 fade-up">
+                    <span class="pill pill-amber">Fiction</span>
+                    <span class="pill pill-amber">Éducatif</span>
+                    <span class="pill pill-amber">Science</span>
+                    <span class="pill pill-amber">3 – 14 ans</span>
                 </div>
 
-                <!-- Mini Cards -->
-                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8 max-w-sm sm:max-w-md mx-auto">
-                    <div class="bg-white rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">📖</div>
-                        <p class="font-bold text-gray-800 text-xs sm:text-sm">Fiction</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🧮</div>
-                        <p class="font-bold text-gray-800 text-xs sm:text-sm">Éducatif</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🔬</div>
-                        <p class="font-bold text-gray-800 text-xs sm:text-sm">Science</p>
-                    </div>
-                    <div class="bg-white rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🎨</div>
-                        <p class="font-bold text-gray-800 text-xs sm:text-sm">Art</p>
-                    </div>
+                <div class="delay-3 fade-up">
+                    <a href="magazine.html?filter=enfant" class="btn-amber">
+                        Découvrir la collection
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
                 </div>
-
-                <a href="catalogue.html?filter=enfant" class="inline-flex items-center bg-white text-orange-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-lg sm:text-xl font-bold hover:bg-orange-50 transition duration-300 shadow-2xl hover-grow">
-                    Découvrir les livres
-                    <svg class="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                </a>
             </div>
         </div>
 
-        <!-- Partie Adultes -->
-        <div class="split-section bg-gradient-to-br from-indigo-600 via-purple-700 to-indigo-900 relative overflow-hidden">
-            <!-- Decorative Elements (sport) -->
-            <div class="absolute inset-0 opacity-12">
-                <div class="absolute top-10 right-10 sm:top-20 sm:right-20 text-6xl sm:text-8xl float-animation">🏟️</div>
-                <div class="absolute bottom-10 left-10 sm:bottom-20 sm:left-20 text-5xl sm:text-7xl float-animation" style="animation-delay: 1s;">🏃</div>
-                <div class="absolute top-20 left-20 sm:top-40 sm:left-40 text-4xl sm:text-6xl float-animation" style="animation-delay: 0.5s;">⚽</div>
-                <div class="absolute bottom-20 right-20 sm:bottom-40 sm:right-40 text-4xl sm:text-6xl float-animation" style="animation-delay: 1.5s;">🏀</div>
+        <!-- Right — Sport -->
+        <div class="panel panel-sport">
+            <div class="corner-rule corner-rule-tl" style="color: rgba(212,168,83,.25);"></div>
+            <div class="corner-rule corner-rule-br" style="color: rgba(212,168,83,.18);"></div>
+
+            <!-- Decorative book spines (lighter) -->
+            <div class="book-spines">
+                <div class="spine" style="height:150px; background:#1E3459;"></div>
+                <div class="spine" style="height:200px; width:22px; background:#243d5e;"></div>
+                <div class="spine" style="height:130px; background:#1a3050;"></div>
+                <div class="spine" style="height:175px; width:14px; background:#2a4568;"></div>
+                <div class="spine" style="height:115px; width:20px; background:#1c3355;"></div>
             </div>
 
-            <div class="relative z-10 text-center px-4 sm:px-6 max-w-2xl mx-auto">
-                <div class="text-6xl sm:text-8xl mb-4 sm:mb-6 bounce-slow">🏅</div>
-                <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-4 sm:mb-6 leading-tight">
-                    Livres pour le<br>sport
-                </h2>
-                <p class="text-base sm:text-lg lg:text-xl text-indigo-100 font-light leading-relaxed mb-4 sm:mb-6">
-                    Guides, entraînements et récits pour les passionnés de sport et de bien-être
+            <div class="relative z-10 max-w-lg fade-up delay-1">
+                <p class="text-xs font-semibold tracking-widest uppercase mb-5" style="color: var(--gold); letter-spacing:.18em;">
+                    Collection Sport
                 </p>
-                <div class="flex flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8 justify-center">
-                    <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">Entraînement</span>
-                    <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">Nutrition</span>
-                    <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 sm:px-4 py-1 sm:py-2 rounded-full text-sm sm:text-base font-semibold">Coaching</span>
+
+                <h2 class="panel-heading text-5xl sm:text-6xl lg:text-7xl mb-6 text-white">
+                    Guides<br><em style="color: var(--gold);">Sport</em><br>&amp; Forme
+                </h2>
+
+                <p class="text-base leading-relaxed mb-7 delay-2 fade-up" style="color: var(--slate-text); max-width:38ch; font-weight:400;">
+                    Guides d'entraînement, programmes de musculation et conseils nutrition rédigés par des coachs certifiés.
+                </p>
+
+                <div class="flex flex-wrap gap-2 mb-8 delay-3 fade-up">
+                    <span class="pill pill-white">Entraînement</span>
+                    <span class="pill pill-white">Nutrition</span>
+                    <span class="pill pill-white">Coaching</span>
+                    <span class="pill pill-white">+18 ans</span>
                 </div>
 
-                <!-- Mini Cards (Sport) -->
-                <div class="grid grid-cols-2 gap-3 sm:gap-4 mb-6 sm:mb-8 max-w-sm sm:max-w-md mx-auto">
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">⚽</div>
-                        <p class="font-bold text-white text-xs sm:text-sm">Football</p>
-                    </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🏃</div>
-                        <p class="font-bold text-white text-xs sm:text-sm">Running</p>
-                    </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🏋️‍♀️</div>
-                        <p class="font-bold text-white text-xs sm:text-sm">Musculation</p>
-                    </div>
-                    <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-3 sm:p-4 text-center hover-grow cursor-pointer">
-                        <div class="text-3xl sm:text-4xl mb-1 sm:mb-2">🥗</div>
-                        <p class="font-bold text-white text-xs sm:text-sm">Nutrition</p>
-                    </div>
+                <div class="delay-4 fade-up">
+                    <a href="magazine.html?filter=adulte" class="btn-outline-white">
+                        Découvrir la collection
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
                 </div>
-
-                <a href="catalogue.html?filter=adulte" class="inline-flex items-center bg-white text-indigo-700 px-6 sm:px-8 py-3 sm:py-4 rounded-xl text-lg sm:text-xl font-bold hover:bg-indigo-50 transition duration-300 shadow-2xl hover-grow">
-                    Découvrir les livres
-                    <svg class="ml-2 sm:ml-3 w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-                    </svg>
-                </a>
             </div>
         </div>
     </section>
 
     <div id="slideOverlay" class="slide-overlay" aria-hidden="true"></div>
 
+    <!-- ── About ── -->
+    <section id="about" class="py-24 lg:py-36 bg-white">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <img src="images/logooo.png" alt="Bookup Logo" class="h-20 lg:h-24 w-auto object-contain mx-auto mb-8 opacity-90">
 
-    <!-- Section À Propos - Simple et Épurée -->
-    <section id="about" class="py-16 sm:py-24 lg:py-32 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <img src="images/logooo.png" alt="Bookup Logo" class="h-24 sm:h-28 lg:h-32 w-auto object-contain mx-auto mb-6 sm:mb-8">
-            <p class="text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed mb-4 sm:mb-6">
-                Nous créons des livres éducatifs de qualité qui stimulent la curiosité et favorisent l'apprentissage.
+            <div class="divider"><div class="divider-diamond"></div></div>
+
+            <h2 class="serif text-3xl lg:text-4xl font-bold text-gray-900 mb-6 leading-snug">
+                L'éducation au cœur<br>de chaque page
+            </h2>
+
+            <p class="text-lg text-gray-600 leading-relaxed mb-4" style="font-weight:400;">
+                Nous créons des livres éducatifs de qualité qui stimulent la curiosité et favorisent l'apprentissage à chaque étape de la vie.
             </p>
-            <p class="text-base sm:text-lg lg:text-xl text-gray-500 leading-relaxed mb-8 sm:mb-12">
-                Notre équipe d'auteurs, d'illustrateurs et de pédagogues conçoit des contenus adaptés à chaque âge, du préscolaire au lycée.
+            <p class="text-base text-gray-500 leading-relaxed mb-10" style="font-weight:400;">
+                Notre équipe d'auteurs, d'illustrateurs et de pédagogues conçoit des contenus adaptés à chaque âge, du préscolaire aux guides pour adultes.
             </p>
 
-            <a href="catalogue.html" class="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 sm:px-10 py-3 sm:py-4 rounded-xl text-base sm:text-lg font-semibold hover:from-indigo-700 hover:to-purple-700 transition duration-300 shadow-lg">
-                Voir tout le Magazine
+            <a href="magazine.html" class="btn-amber" style="margin: 0 auto; width: fit-content;">
+                Explorer le magazine
+                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
+
+            <div class="divider" style="margin-top:3rem;"><div class="divider-diamond"></div></div>
         </div>
     </section>
 
-    <!-- Section Contact - Simple -->
-    <section id="contact" class="py-16 sm:py-24 bg-gray-50">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h3 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-8 sm:mb-12">Contact</h3>
+    <!-- ── Contact ── -->
+    <section id="contact" class="py-20 lg:py-28" style="background: var(--cream);">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <p class="text-xs font-semibold tracking-widest uppercase mb-3" style="color: var(--amber); letter-spacing:.18em;">Nous contacter</p>
+                <h3 class="serif text-3xl lg:text-4xl font-bold text-gray-900">Restons en contact</h3>
+            </div>
 
-            <div class="space-y-4 sm:space-y-6">
-                <div class="flex items-center justify-center space-x-3 sm:space-x-4">
-                    <div class="text-2xl sm:text-3xl">📧</div>
-                    <div class="text-left">
-                        <p class="font-semibold text-gray-900 text-sm sm:text-base">Email</p>
-                        <p class="text-gray-600 text-sm sm:text-base">contact@edulivres.fr</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Email -->
+                <div class="contact-card">
+                    <div class="contact-icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"/>
+                            <path d="M2 7l10 7 10-7"/>
+                        </svg>
                     </div>
+                    <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--amber);">Email</p>
+                    <p class="text-sm text-gray-800 font-medium">contact@bookup.fr</p>
                 </div>
 
-                <div class="flex items-center justify-center space-x-3 sm:space-x-4">
-                    <div class="text-2xl sm:text-3xl">📞</div>
-                    <div class="text-left">
-                        <p class="font-semibold text-gray-900 text-sm sm:text-base">Téléphone</p>
-                        <p class="text-gray-600 text-sm sm:text-base">0751567777</p>
+                <!-- Phone -->
+                <div class="contact-card">
+                    <div class="contact-icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+                        </svg>
                     </div>
+                    <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--amber);">Téléphone</p>
+                    <p class="text-sm text-gray-800 font-medium">0751 567 777</p>
                 </div>
 
-                <div class="flex items-center justify-center space-x-3 sm:space-x-4">
-                    <div class="text-2xl sm:text-3xl">📍</div>
-                    <div class="text-left">
-                        <p class="font-semibold text-gray-900 text-sm sm:text-base">Adresse</p>
-                        <p class="text-gray-600 text-sm sm:text-base">AADL 200, ilot I, Senia Oran</p>
+                <!-- Address -->
+                <div class="contact-card">
+                    <div class="contact-icon-wrap">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C8973A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
                     </div>
+                    <p class="text-xs font-semibold tracking-widest uppercase mb-1" style="color: var(--amber);">Adresse</p>
+                    <p class="text-sm text-gray-800 font-medium">Senia, Oran</p>
                 </div>
             </div>
 
-            <div class="mt-8 sm:mt-12 pt-8 sm:pt-12 border-t border-gray-200">
-                <p class="text-xs sm:text-sm text-gray-500">Lundi - Vendredi : 9h00 - 18h00 | Samedi : 10h00 - 16h00</p>
-            </div>
+            <p class="text-center text-xs text-gray-400 mt-10" style="letter-spacing:.06em;">
+                Lundi – Vendredi : 9h00 – 18h00 &nbsp;|&nbsp; Samedi : 10h00 – 16h00
+            </p>
         </div>
     </section>
 
-    <!-- Footer Simple -->
-    <footer class="bg-gray-900 text-white py-6 sm:py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-400 text-sm sm:text-base">&copy; 2023 Bookup. Tous droits réservés.</p>
-            <p class="mt-2 text-gray-500 text-xs sm:text-sm">L'éducation est la clé de l'avenir</p>
+    <!-- ── Footer ── -->
+    <footer style="background: var(--navy);" class="py-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <img src="images/logoo.png" alt="Bookup" class="h-9 w-auto opacity-80 object-contain">
+            <p class="text-sm order-3 sm:order-2" style="color: var(--slate-text);">
+                &copy; 2026 Bookup — Tous droits réservés.
+            </p>
+            <p class="text-xs order-2 sm:order-3 font-medium tracking-widest uppercase" style="color: var(--gold); opacity:.7; letter-spacing:.14em;">
+                L'éducation est la clé
+            </p>
         </div>
     </footer>
 
@@ -336,8 +544,8 @@
                 setTimeout(() => { window.location.href = url; }, 650);
             }
 
-            // Intercept catalogue links with filter param
-            document.querySelectorAll('a[href*="catalogue.html?filter="]').forEach(a => {
+            // Intercept magazine links with filter param
+            document.querySelectorAll('a[href*="magazine.html?filter="]').forEach(a => {
                 a.addEventListener('click', function(e){
                     const href = a.getAttribute('href');
                     if (!href) return;
