@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(winget install:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(node:*)"
     ]
   }
 }
