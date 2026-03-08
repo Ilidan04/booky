@@ -37,7 +37,7 @@
 
             <!-- Image Viewer -->
             <div class="mb-8">
-                <img id="bookPageImage" src="" alt="Page du livre" class="w-full max-w-4xl mx-auto rounded-lg shadow-lg">
+                <img id="bookPageImage" src="" alt="Page du livre" class="mx-auto rounded-lg shadow-lg block" style="max-width:100%;height:auto;">
             </div>
 
             <!-- Audio Player Section -->
@@ -82,7 +82,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const bookTitle = urlParams.get('book');
+            const bookTitle = sessionStorage.getItem('selectedBook');
             let currentPage = parseInt(urlParams.get('page')) || 1;
 
             const book = bookData[bookTitle];
@@ -126,7 +126,7 @@
                 }
                 
                 // Update URL without reloading
-                const newUrl = `${window.location.pathname}?book=${encodeURIComponent(bookTitle)}&page=${page}`;
+                const newUrl = `${window.location.pathname}?page=${page}`;
                 window.history.pushState({path: newUrl}, '', newUrl);
 
                 renderPagination(page);

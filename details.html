@@ -93,13 +93,14 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const bookTitle = urlParams.get('book');
+            const bookTitle = sessionStorage.getItem('selectedBook');
             const book = books[bookTitle];
             const contentDiv = document.getElementById('book-content');
 
             if (book) {
-                let currentIndex = 0;
+                const urlParams = new URLSearchParams(window.location.search);
+                let currentIndex = Math.min(parseInt(urlParams.get('page') || '1') - 1, book.pages.length - 1);
+                if (currentIndex < 0) currentIndex = 0;
 
                 const imageGalleryHTML = `
                     <div class="flex-1 min-h-0">
@@ -124,7 +125,7 @@
                         </div>
                         <div id="pagination" class="flex flex-col justify-center gap-1 py-2">
                             ${book.pages.map((p, i) => `
-                                <button data-index="${i}" class="pagination-btn w-7 h-7 rounded-full text-xs font-semibold transition ${i === 0 ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-indigo-100'}">
+                                <button data-index="${i}" class="pagination-btn w-7 h-7 rounded-full text-xs font-semibold transition ${i === currentIndex ? 'bg-indigo-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-indigo-100'}">
                                     ${i + 1}
                                 </button>`).join('')}
                         </div>
@@ -159,7 +160,7 @@
                     }).join('');
                 }
 
-                textBody.innerHTML = renderText(book.pages[0].text);
+                textBody.innerHTML = renderText(book.pages[currentIndex].text);
 
                 function reAnimate(el, cls) {
                     el.classList.remove('anim-top', 'anim-bottom', 'anim-right');
@@ -170,6 +171,7 @@
                 function applyContent(index) {
                     currentIndex = index;
                     const page = book.pages[currentIndex];
+                    window.history.pushState({}, '', `${window.location.pathname}?page=${currentIndex + 1}`);
 
                     galleryImage.src = `books/musculation/imago/${page.image}`;
                     galleryImage.alt = page.title;

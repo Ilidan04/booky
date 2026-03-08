@@ -311,8 +311,11 @@
             paginatedBooks.forEach(book => {
                 const cardLink = document.createElement('a');
                 const isEnfant = book.categorie && book.categorie.toLowerCase().includes('enfant');
-                cardLink.href = `${isEnfant ? 'details-enfant' : 'details'}.html?book=${encodeURIComponent(book.titre)}`;
+                cardLink.href = `${isEnfant ? 'details-enfant' : 'details'}.html`;
                 cardLink.className = 'block h-full';
+                cardLink.addEventListener('click', () => {
+                    sessionStorage.setItem('selectedBook', book.titre);
+                });
 
                 const bookCard = document.createElement('div');
                 if (book.format && book.format.toLowerCase() === 'image') {
