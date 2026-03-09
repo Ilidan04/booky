@@ -257,22 +257,6 @@
         .delay-3 { animation-delay: .38s; }
         .delay-4 { animation-delay: .52s; }
 
-        /* Book spine decorative element */
-        .book-spines {
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            display: flex;
-            align-items: flex-end;
-            gap: 4px;
-            padding: 0 2.5rem 0 0;
-            opacity: .18;
-            pointer-events: none;
-        }
-        .spine {
-            width: 18px;
-            border-radius: 3px 3px 0 0;
-        }
     </style>
 </head>
 <body>
@@ -322,15 +306,6 @@
             <div class="corner-rule corner-rule-tl" style="color: rgba(200,151,58,.35);"></div>
             <div class="corner-rule corner-rule-br" style="color: rgba(200,151,58,.25);"></div>
 
-            <!-- Decorative book spines -->
-            <div class="book-spines">
-                <div class="spine bg-amber-300" style="height:160px;"></div>
-                <div class="spine bg-orange-400" style="height:210px;width:22px;"></div>
-                <div class="spine bg-yellow-500" style="height:140px;"></div>
-                <div class="spine bg-amber-500" style="height:185px;width:14px;"></div>
-                <div class="spine bg-orange-300" style="height:120px;width:20px;"></div>
-            </div>
-
             <div class="relative z-10 max-w-lg fade-up">
                 <!-- Overline label -->
                 <p class="text-xs font-semibold tracking-widest uppercase mb-5" style="color: var(--amber); letter-spacing:.18em;">
@@ -366,15 +341,6 @@
         <div class="panel panel-sport">
             <div class="corner-rule corner-rule-tl" style="color: rgba(212,168,83,.25);"></div>
             <div class="corner-rule corner-rule-br" style="color: rgba(212,168,83,.18);"></div>
-
-            <!-- Decorative book spines (lighter) -->
-            <div class="book-spines">
-                <div class="spine" style="height:150px; background:#1E3459;"></div>
-                <div class="spine" style="height:200px; width:22px; background:#243d5e;"></div>
-                <div class="spine" style="height:130px; background:#1a3050;"></div>
-                <div class="spine" style="height:175px; width:14px; background:#2a4568;"></div>
-                <div class="spine" style="height:115px; width:20px; background:#1c3355;"></div>
-            </div>
 
             <div class="relative z-10 max-w-lg fade-up delay-1">
                 <p class="text-xs font-semibold tracking-widest uppercase mb-5" style="color: var(--gold); letter-spacing:.18em;">
