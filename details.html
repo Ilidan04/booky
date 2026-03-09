@@ -143,99 +143,210 @@
             background: linear-gradient(180deg, #1a2535 0%, #f3f4f6 90px) !important;
         }
 
-        /* ── Media panels (image & video) ── */
-        /* Target the wrapper divs for image and video */
-        #book-content .flex-col > .flex-1.min-h-0:first-child {
-            position: relative;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+        /* ── Image loader ── */
+        .loader-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(11,23,40,0.55);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            border-radius: 16px;
         }
-        #book-content .flex-col > .flex-1.min-h-0:first-child::before {
+        .loader-overlay.active { display: flex; }
+        .loader-spinner {
+            width: 38px; height: 38px;
+            border: 3px solid rgba(200,151,58,0.2);
+            border-top-color: var(--amber);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Main image column ── */
+        .image-main-col {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+            height: 100%;
+        }
+        .image-main-col::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 4px;
             background: linear-gradient(90deg, var(--amber), var(--gold));
-            z-index: 10;
+            z-index: 2;
         }
-        #book-content .flex-col > .flex-1.min-h-0:last-child {
-            position: relative;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.28);
-        }
-        #book-content .flex-col > .flex-1.min-h-0:last-child::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold), var(--amber));
-            z-index: 10;
-        }
-
-        /* Image styling */
         #gallery-image {
-            border-radius: 0 !important;
-            box-shadow: none !important;
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
             background: #0d1b2a;
         }
 
-        /* Video styling */
-        #video-player {
-            border-radius: 0 !important;
-            box-shadow: none !important;
-            background: #000;
-        }
-
-        /* ── Text panel ── */
-        #book-content .bg-white.p-8 {
-            border-radius: 14px !important;
-            border-left: 4px solid var(--amber) !important;
-            box-shadow: 0 4px 32px rgba(0,0,0,0.1) !important;
-            padding: 2rem 2rem 2rem 1.75rem !important;
-        }
-
-        /* Title styling */
+        /* ── Content column ── */
         #content-title {
-            font-family: 'Playfair Display', serif !important;
-            font-size: 2rem !important;
-            font-weight: 900 !important;
-            color: var(--navy) !important;
-            margin-bottom: 1.25rem !important;
-            line-height: 1.15 !important;
-            padding-bottom: 0.75rem;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--navy);
+            line-height: 1.15;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1rem;
             border-bottom: 1px solid rgba(200,151,58,0.25);
         }
 
-        /* Text body */
-        #text-body {
-            font-size: 0.93rem !important;
-            line-height: 1.75 !important;
-            color: #374151 !important;
+        /* ── Tab navigation ── */
+        .tab-nav {
+            display: flex;
+            gap: 4px;
+            background: #f1f3f5;
+            border-radius: 10px;
+            padding: 4px;
+            margin-bottom: 1rem;
         }
-        #text-body p { margin-bottom: 0.75rem; }
-        #text-body p.underline {
-            color: var(--navy);
+        .tab-btn {
+            flex: 1;
+            padding: 7px 10px;
+            border: none;
+            border-radius: 7px;
+            background: transparent;
+            color: #6B7280;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
             font-weight: 600;
-            font-size: 0.92rem;
-            text-decoration: none !important;
-            letter-spacing: 0.01em;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        .tab-btn.active {
+            background: #fff;
+            color: var(--navy);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+        }
+        .tab-btn:not(.active):hover { color: var(--amber); }
+        .tab-flag { font-size: 1.25rem; line-height: 1; }
+        .flag-fr {
+            display: inline-block;
+            width: 26px;
+            height: 18px;
+            border-radius: 3px;
+            background: linear-gradient(to right, #002395 33.33%, #fff 33.33% 66.67%, #ED2939 66.67%);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+            vertical-align: middle;
+        }
+        .flag-en {
+            display: inline-block;
+            width: 26px;
+            height: 18px;
+            border-radius: 3px;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+            vertical-align: middle;
+            overflow: hidden;
+        }
+        .flag-en::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 0; right: 0;
+            height: 5px;
+            margin-top: -2.5px;
+            background: #CF142B;
+        }
+        .flag-en::after {
+            content: '';
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 5px;
+            margin-left: -2.5px;
+            background: #CF142B;
+        }
+
+        /* ── Tab panes ── */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+
+        /* ── Video trigger (inside video tab) ── */
+        .video-trigger {
+            width: 100%;
+            flex: 1;
+            background: var(--navy);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            transition: background 0.2s;
+        }
+        .video-trigger:hover { background: #132038; }
+        .video-trigger-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            pointer-events: none;
+        }
+        .video-play-circle {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            border: 2px solid var(--amber);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--amber);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .video-trigger:hover .video-play-circle {
+            transform: scale(1.08);
+            box-shadow: 0 0 0 6px rgba(200,151,58,0.12);
+        }
+        .video-trigger-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--slate-text);
+        }
+        #video-player {
+            width: 100%;
+            flex: 1;
+            border-radius: 12px;
+            background: #000;
+            display: none;
+        }
+
+        /* ── Tab text content ── */
+        .tab-text {
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #374151;
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+            min-height: 0;
+        }
+        .tab-text p { margin-bottom: 0.65rem; }
+        .tab-text .text-section-title {
+            font-weight: 700;
+            color: var(--navy);
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 0.88rem;
         }
-        #text-body p.underline::before {
+        .tab-text .text-section-title::before {
             content: '';
             display: inline-block;
-            width: 16px; height: 2px;
+            width: 14px; height: 2px;
             background: var(--amber);
             border-radius: 2px;
             flex-shrink: 0;
-        }
-        #text-body hr {
-            border-color: rgba(200,151,58,0.2) !important;
-            margin: 1rem 0 !important;
         }
 
         /* ── Pagination sidebar ── */
@@ -245,7 +356,6 @@
             padding: 0.75rem 0.4rem;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
-
         .pagination-btn {
             display: flex !important;
             align-items: center !important;
@@ -316,8 +426,8 @@
                     <span class="hero-stat-label">Exercices</span>
                 </div>
                 <div class="hero-stat">
-                    <span class="hero-stat-num">FR</span>
-                    <span class="hero-stat-label">Bilingue</span>
+                    <span class="hero-stat-num">2</span>
+                    <span class="hero-stat-label">Langues</span>
                 </div>
             </div>
         </div>
@@ -350,10 +460,10 @@
                     { image: "1.jpg", video: "1-chest.mp4", title: "Chest", titleFr: "Poitrine", text: "Dumbbell Bench Press Overview\n\nThe dumbbell bench press is a variation of the barbell bench press and an exercise used to build the muscles of the chest.\n\nOften times, the dumbbell bench press is recommended after reaching a certain point of strength on the barbell bench press to avoid pec and shoulder injuries.\n\nAdditionally, the dumbbell bench press provides an ego check in the amount of weight used due to the need to maintain shoulder stability throughout the exercise.\n\nThe exercise itself can be featured as a main lift in your workouts or an accessory lift to the bench press depending on your goals.\n\nAperçu du développé couché avec haltères\n\nLe développé couché avec haltères est une variante du développé couché avec barre et un exercice utilisé pour développer les muscles de la poitrine.\n\nLe développé couché avec haltères est souvent recommandé après avoir atteint un certain niveau de force au développé couché avec barre afin d'éviter les blessures aux pectoraux et aux épaules.\n\nDe plus, le développé couché avec haltères permet de relativiser la quantité de poids utilisée, car il est nécessaire de maintenir la stabilité des épaules tout au long de l'exercice.\n\nCet exercice peut être intégré comme exercice principal de vos séances d'entraînement ou comme exercice accessoire au développé couché, selon vos objectifs." },
                     { image: "2.jpg", video: "2-shoulder.mp4", title: "Shoulder", titleFr: "Épaule", text: "Dumbbell Shoulder Press Overview\n\nThe dumbbell bench press is a variation of the barbell bench press and an exercise used to build the muscles of the chest and shoulders.\n\nOften times, the dumbbell bench press is recommended after reaching a certain point of strength on the barbell bench press to avoid pec and shoulder injuries.\n\nAdditionally, the dumbbell bench press provides an ego check in the amount of weight used due to the need to maintain shoulder stability throughout the exercise.\n\nThe exercise itself can be featured as a main lift in your workouts or an accessory lift to the bench press depending on your goals.\n\nAperçu du développé couché avec haltères\n\nLe développé couché avec haltères est une variante du développé couché avec barre et un exercice utilisé pour développer les muscles de la poitrine.\n\nLe développé couché avec haltères est souvent recommandé après avoir atteint un certain niveau de force au développé couché avec barre afin d'éviter les blessures aux pectoraux et aux épaules.\n\nDe plus, le développé couché avec haltères permet de relativiser la quantité de poids utilisée, car il est nécessaire de maintenir la stabilité des épaules tout au long de l'exercice." },
                     { image: "3.jpg", video: "3-biceps.mp4", title: "Biceps", titleFr: "Biceps", text: "Dumbbell Hammer Preacher Curl Overview\n\nThe preacher dumbbell hammer curl is a variation of the hammer curl and an exercise used to build bigger biceps.\n\nUtilizing the preacher set up while performing preacher dumbbell hammer curls promotes a fixed range of motion for the hammer curl, allowing for a more focused contraction on the biceps.\n\nWhen trying to build your biceps, using a wide range of exercises which focus on different ranges of motion is the best approach.\n\nAperçu du curl biceps au pupitre avec haltères marteau\n\nLe curl marteau avec haltères à la barre de pupitre est une variante du curl marteau et un exercice utilisé pour développer des biceps plus volumineux.\n\nL'utilisation d'un pupitre à biceps lors de l'exécution de flexions de biceps avec haltères favorise une amplitude de mouvement fixe pour le mouvement, permettant une contraction plus ciblée des biceps.\n\nPour développer ses biceps, la meilleure approche consiste à utiliser une grande variété d'exercices qui sollicitent différentes amplitudes de mouvement." },
-                    { image: "4.jpg", video: "4-back.mp4", title: "Back", titleFr: "Dos", text: "Bent Over Row Overview\n\nThe bent over row is a back day staple exercise and is considered one of the best muscle building back exercises you can do.\n\nSometimes referred to as the barbell row, the bent over row is a staple movement in most muscle building workouts. Those looking to build muscle utilize the bent over row to target their back, bicep and core muscles.\n\nThose in powerlifting and strength circles perform bent over rows to increase their strength on the big 3 movements.\n\nThe bent over row is typically used to build and strengthen the muscles of the upper back (latissimus dorsi, rhomboids, and trapezius). However, it requires assistance from muscles of the low back, core, and arms to perform a bent over row correctly.\n\nThere are several variations of the bent over row one can and should perform.\n\nAperçu du rowing buste penché\n\nLe rowing buste penché est un exercice de base pour les séances d'entraînement du dos et est considéré comme l'un des meilleurs exercices de musculation du dos que vous puissiez faire.\n\nParfois appelé rowing barre, le rowing buste penché est un exercice fondamental dans la plupart des programmes de musculation. Ceux qui cherchent à développer leur masse musculaire l'utilisent pour cibler le dos, les biceps et les muscles abdominaux.\n\nIl existe plusieurs variantes du rowing buste penché que l'on peut et doit effectuer." },
+                    { image: "4.jpg", video: "4-back.mp4", title: "Back", titleFr: "Dorsaux", text: "Bent Over Row Overview\n\nThe bent over row is a back day staple exercise and is considered one of the best muscle building back exercises you can do.\n\nSometimes referred to as the barbell row, the bent over row is a staple movement in most muscle building workouts. Those looking to build muscle utilize the bent over row to target their back, bicep and core muscles.\n\nThose in powerlifting and strength circles perform bent over rows to increase their strength on the big 3 movements.\n\nThe bent over row is typically used to build and strengthen the muscles of the upper back (latissimus dorsi, rhomboids, and trapezius). However, it requires assistance from muscles of the low back, core, and arms to perform a bent over row correctly.\n\nThere are several variations of the bent over row one can and should perform.\n\nAperçu du rowing buste penché\n\nLe rowing buste penché est un exercice de base pour les séances d'entraînement du dos et est considéré comme l'un des meilleurs exercices de musculation du dos que vous puissiez faire.\n\nParfois appelé rowing barre, le rowing buste penché est un exercice fondamental dans la plupart des programmes de musculation. Ceux qui cherchent à développer leur masse musculaire l'utilisent pour cibler le dos, les biceps et les muscles abdominaux.\n\nIl existe plusieurs variantes du rowing buste penché que l'on peut et doit effectuer." },
                     { image: "5.jpg", video: "5-tricep.mp4", title: "Triceps", titleFr: "Triceps", text: "Straight Bar Tricep Extension Overview\n\nThe straight bar tricep extension is a variation of the cable tricep extension and an exercise used to build the muscles of the triceps.\n\nWell-built triceps also have a lot of positive carryover into your pressing movements such as bench press variations and shoulder press variations.\n\nThe straight bar tricep extension can be incorporated into your tricep workouts, upper body workouts, push workouts, and full body workouts.\n\nAperçu de l'extension des triceps à la barre droite\n\nL'extension des triceps à la barre droite est une variante de l'extension des triceps à la poulie et un exercice utilisé pour développer les muscles des triceps.\n\nDes triceps bien développés ont également un impact positif sur vos mouvements de poussée comme les variantes de développé couché et de développé militaire.\n\nL'extension des triceps à la barre droite peut être intégrée à vos séances d'entraînement des triceps, du haut du corps, de poussée et à vos séances d'entraînement complètes." },
                     { image: "6.jpg", video: "6-forearm.mp4", title: "Forearm", titleFr: "Avant-bras", text: "Plate Pinch Carry Overview\n\nThe plate pinch carry is a variation of the farmer's walk and an exercise used to strengthen the muscles of the forearms. They will also indirectly work the muscles of the core.\n\nOf all the loaded carries, the plate pinch carry is going to be one of the more challenging variations for the forearms.\n\nThe loaded carry exercise is a foundational movement and should be incorporated into your workout programs in some form.\n\nAperçu du port de plaque par pincement\n\nLe transport de poids en pinçant une assiette est une variante de la marche du fermier et un exercice utilisé pour renforcer les muscles des avant-bras. Il sollicite également indirectement les muscles du tronc.\n\nDe tous les types de port de charge, le port avec pincement de plaque sera l'une des variantes les plus exigeantes pour les avant-bras.\n\nL'exercice de transport de charges est un mouvement fondamental et devrait être intégré d'une manière ou d'une autre à vos programmes d'entraînement." },
-                    { image: "7.jpg", video: "7-abs.mp4", title: "Abs", titleFr: "Abdominaux", text: "Lying Floor Leg Raise Overview\n\nThe lying floor leg raise is a variation of the abdominal crunch and an exercise used to isolate the muscles of the abdomen.\n\nThe lying floor leg raise is a flexion based exercise which keeps the lower abdominal muscles under constant tension during the entire range of motion.\n\nAperçu de l'élévation des jambes au sol en position couchée\n\nLe relevé de jambes au sol est une variante du crunch abdominal et un exercice utilisé pour isoler les muscles de l'abdomen.\n\nLe relevé de jambes au sol est un exercice basé sur la flexion qui maintient les muscles abdominaux inférieurs sous tension constante pendant toute l'amplitude de mouvement." },
+                    { image: "7.jpg", video: "7-abs.mp4", title: "Abdominals", titleFr: "Abdominaux", text: "Lying Floor Leg Raise Overview\n\nThe lying floor leg raise is a variation of the abdominal crunch and an exercise used to isolate the muscles of the abdomen.\n\nThe lying floor leg raise is a flexion based exercise which keeps the lower abdominal muscles under constant tension during the entire range of motion.\n\nAperçu de l'élévation des jambes au sol en position couchée\n\nLe relevé de jambes au sol est une variante du crunch abdominal et un exercice utilisé pour isoler les muscles de l'abdomen.\n\nLe relevé de jambes au sol est un exercice basé sur la flexion qui maintient les muscles abdominaux inférieurs sous tension constante pendant toute l'amplitude de mouvement." },
                     { image: "8.jpg", video: "8-quad.mp4", title: "Quads", titleFr: "Quadriceps", text: "Dumbbell Goblet Squat Overview\n\nThe dumbbell goblet squat is a variation of the squat and an exercise used to build the muscles of the legs. In particular, the dumbbell goblet squat will place a lot of emphasis on the quads.\n\nThe squat movement pattern is a foundational movement and should be performed by most capable individuals throughout their lives. So, it is important to find a variation that is comfortable for you to perform, and continuously work on it.\n\nYou can include the dumbbell goblet squat in your leg workouts or full body workouts.\n\nAperçu du squat avec haltères et gobelet\n\nLe squat goblet avec haltères est une variante du squat et un exercice utilisé pour développer les muscles des jambes. Plus précisément, le squat goblet avec haltères sollicite fortement les quadriceps.\n\nLe squat est un mouvement fondamental que la plupart des personnes en bonne santé devraient pratiquer régulièrement tout au long de leur vie. Il est donc important de trouver une variante confortable et de la travailler régulièrement.\n\nVous pouvez inclure le squat goblet avec haltères dans vos séances d'entraînement des jambes ou de tout le corps." },
                     { image: "9.jpeg", video: "9-hamst.mp4", title: "Hamstrings", titleFr: "Ischio-jambiers", text: "Seated Leg Curl Overview\n\nThe seated leg curl is a variation of the leg curl and an exercise used to isolate the hamstrings.\n\nThe seated leg curl is best used as part of your leg workout or in a full body workout routine.\n\nAperçu du leg curl assis\n\nLe leg curl assis est une variante du leg curl et un exercice utilisé pour isoler les ischio-jambiers.\n\nLe leg curl assis est idéal dans le cadre d'un entraînement des jambes ou d'une routine d'entraînement complète." },
                     { image: "10.jpg", video: "10-calves.mp4", title: "Calves", titleFr: "Mollets", text: "45 Degree Leg Press Calf Raise Overview\n\nThe leg press calf raise is a variation of the machine calf raise and an exercise used to build the muscles of the calves.\n\nThe calves can be a very stubborn muscle group, so it's important to target them with plenty of different angles and with a high training frequency.\n\nThis exercise can be incorporated into your leg days or full body days.\n\nPrésentation de l'exercice de presse à jambes à 45 degrés pour les mollets\n\nLe leg press calf raise est une variante du leg press calf raise à la machine et un exercice utilisé pour développer les muscles des mollets.\n\nLes mollets peuvent être un groupe musculaire très résistant, il est donc important de les solliciter sous différents angles et avec une fréquence d'entraînement élevée.\n\nCet exercice peut être intégré à vos séances d'entraînement des jambes ou de tout le corps." },
@@ -372,89 +482,149 @@
                 let currentIndex = Math.min(parseInt(urlParams.get('page') || '1') - 1, book.pages.length - 1);
                 if (currentIndex < 0) currentIndex = 0;
 
-                const imageGalleryHTML = `
-                    <div class="flex-1 min-h-0">
-                        <img id="gallery-image" src="books/musculation/imago/${book.pages[currentIndex].image}" alt="${book.pages[currentIndex].title}" class="w-full h-full object-contain rounded-lg shadow-lg">
-                    </div>
-                `;
+                // ── Helpers ──
+                function splitText(text) {
+                    const paras = text.split('\n\n');
+                    const frIdx = paras.findIndex(p => /^(Aper|Pr.sentation)/i.test(p.replace(/\n/g, ' ').trim()));
+                    if (frIdx === -1) return { en: paras, fr: [] };
+                    return { en: paras.slice(0, frIdx), fr: paras.slice(frIdx) };
+                }
 
-                const videoPlayerHTML = `
-                    <div class="flex-1 min-h-0">
-                        <video id="video-player" class="w-full h-full rounded-lg shadow-lg" controls>
-                            <source id="video-source" src="books/musculation/video/${book.pages[currentIndex].video}" type="video/mp4">
-                            Votre navigateur ne supporte pas la balise vidéo.
-                        </video>
-                    </div>
-                `;
-
-                const textContentHTML = `
-                    <div class="flex gap-3 h-full">
-                        <div class="flex-1 overflow-y-auto bg-white p-8 rounded-lg shadow-lg min-h-0">
-                            <h1 class="text-4xl font-extrabold text-gray-900 mb-6" id="content-title">${book.pages[currentIndex].title} / ${book.pages[currentIndex].titleFr}</h1>
-                            <div id="text-body" class="prose prose-lg max-w-none text-gray-700 space-y-3"></div>
-                        </div>
-                        <div id="pagination" class="flex flex-col justify-center gap-1 py-2">
-                            ${book.pages.map((p, i) => `
-                                <button data-index="${i}" class="pagination-btn w-7 h-7 rounded-full text-xs font-semibold transition ${i === currentIndex ? 'text-white' : 'bg-gray-200 text-gray-700'}" style="${i === currentIndex ? 'background:var(--amber)' : ''}">
-                                    ${i + 1}
-                                </button>`).join('')}
-                        </div>
-                    </div>`;
-
-                contentDiv.classList.add('relative');
-                contentDiv.innerHTML = `
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch book-page-slide">
-                        <div class="flex flex-col gap-8 h-full">
-                            ${imageGalleryHTML}
-                            ${videoPlayerHTML}
-                        </div>
-                        ${textContentHTML}
-                    </div>`;
-
-                const galleryImage = document.getElementById('gallery-image');
-                const videoPlayer = document.getElementById('video-player');
-                const videoSource = document.getElementById('video-source');
-                const contentTitle = document.getElementById('content-title');
-                const textBody = document.getElementById('text-body');
-
-                function renderText(text) {
-                    return text.split('\n\n').map((p, i) => {
+                function renderParas(paras) {
+                    return paras.map((p, i) => {
                         const clean = p.replace(/\n/g, ' ').trim();
-                        if (/^Aper/i.test(clean) || /^Pr.sentation/i.test(clean)) {
-                            return `<hr class="my-4 border-gray-200"><p class="underline font-semibold">${clean}</p>`;
-                        }
-                        if (i === 0) {
-                            return `<p class="underline font-semibold">${clean}</p>`;
-                        }
+                        if (!clean) return '';
+                        if (i === 0) return `<p class="text-section-title">${clean}</p>`;
                         return `<p>${clean}</p>`;
                     }).join('');
                 }
 
-                textBody.innerHTML = renderText(book.pages[currentIndex].text);
-
                 function reAnimate(el, cls) {
+                    if (!el) return;
                     el.classList.remove('anim-top', 'anim-bottom', 'anim-right');
-                    void el.offsetWidth; // force reflow
+                    void el.offsetWidth;
                     el.classList.add(cls);
                 }
 
+                // ── Build layout ──
+                const firstPage = book.pages[currentIndex];
+                contentDiv.classList.add('relative');
+                contentDiv.innerHTML = `
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch book-page-slide">
+                        <!-- Left: main image -->
+                        <div class="image-main-col">
+                            <div id="img-loader" class="loader-overlay">
+                                <div class="loader-spinner"></div>
+                            </div>
+                            <img id="gallery-image" src="books/musculation/imago/${firstPage.image}" alt="${firstPage.title}">
+                        </div>
+                        <!-- Right: title + tabs + pagination -->
+                        <div class="flex gap-3 h-full">
+                            <div class="flex-1 bg-white rounded-xl shadow-md p-5" style="border-left:4px solid var(--amber); display:flex; flex-direction:column;">
+                                <h1 id="content-title">${firstPage.title} / ${firstPage.titleFr}</h1>
+                                <!-- Tab nav -->
+                                <div class="tab-nav">
+                                    <button class="tab-btn active" data-tab="video">▶ Vidéo</button>
+                                    <button class="tab-btn" data-tab="fr"><span class="flag-fr"></span></button>
+                                    <button class="tab-btn" data-tab="en"><span class="flag-en"></span></button>
+                                </div>
+                                <!-- Tab panes -->
+                                <div id="tab-video" class="tab-pane active">
+                                    <button id="video-trigger" class="video-trigger">
+                                        <div class="video-trigger-inner">
+                                            <div class="video-play-circle">
+                                                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                                            </div>
+                                            <span class="video-trigger-label">Voir la démonstration</span>
+                                        </div>
+                                    </button>
+                                    <video id="video-player" controls>
+                                        <source id="video-source" src="books/musculation/video/${firstPage.video}" type="video/mp4">
+                                    </video>
+                                </div>
+                                <div id="tab-fr" class="tab-pane">
+                                    <div id="text-body-fr" class="tab-text"></div>
+                                </div>
+                                <div id="tab-en" class="tab-pane">
+                                    <div id="text-body-en" class="tab-text"></div>
+                                </div>
+                            </div>
+                            <!-- Pagination sidebar -->
+                            <div id="pagination" class="flex flex-col justify-center gap-1 py-2">
+                                ${book.pages.map((p, i) => `
+                                    <button data-index="${i}" class="pagination-btn w-7 h-7 rounded-full text-xs font-semibold transition ${i === currentIndex ? 'text-white' : 'bg-gray-200 text-gray-700'}" style="${i === currentIndex ? 'background:var(--amber)' : ''}">
+                                        ${i + 1}
+                                    </button>`).join('')}
+                            </div>
+                        </div>
+                    </div>`;
+
+                // ── Element refs ──
+                const galleryImage = document.getElementById('gallery-image');
+                const videoPlayer  = document.getElementById('video-player');
+                const videoSource  = document.getElementById('video-source');
+                const contentTitle = document.getElementById('content-title');
+                const textBodyFr   = document.getElementById('text-body-fr');
+                const textBodyEn   = document.getElementById('text-body-en');
+
+                // Populate initial text
+                const initSplit = splitText(firstPage.text);
+                textBodyFr.innerHTML = renderParas(initSplit.fr);
+                textBodyEn.innerHTML = renderParas(initSplit.en);
+
+                // ── Tab switching ──
+                contentDiv.addEventListener('click', e => {
+                    const btn = e.target.closest('.tab-btn');
+                    if (!btn) return;
+                    const tab = btn.dataset.tab;
+                    contentDiv.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    contentDiv.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById('tab-' + tab).classList.add('active');
+                });
+
+                // ── Video trigger ──
+                document.getElementById('video-trigger').addEventListener('click', () => {
+                    document.getElementById('video-trigger').style.display = 'none';
+                    videoPlayer.style.display = 'block';
+                    videoPlayer.play();
+                });
+
+                // ── Page change ──
                 function applyContent(index) {
                     currentIndex = index;
                     const page = book.pages[currentIndex];
                     window.history.pushState({}, '', `${window.location.pathname}?page=${currentIndex + 1}`);
 
-                    galleryImage.src = `books/musculation/imago/${page.image}`;
-                    galleryImage.alt = page.title;
-                    reAnimate(galleryImage, 'anim-top');
+                    // Show loader
+                    const loader = document.getElementById('img-loader');
+                    if (loader) loader.classList.add('active');
 
+                    // Reset video
                     videoSource.src = `books/musculation/video/${page.video}`;
                     videoPlayer.load();
-                    videoPlayer.play();
-                    reAnimate(videoPlayer, 'anim-bottom');
+                    videoPlayer.pause();
+                    videoPlayer.style.display = 'none';
+                    const trigger = document.getElementById('video-trigger');
+                    if (trigger) trigger.style.display = 'flex';
 
-                    contentTitle.textContent = `${page.title} / ${page.titleFr}`;
-                    textBody.innerHTML = renderText(page.text);
-                    reAnimate(contentTitle.closest('.bg-white'), 'anim-right');
+                    // Preload image, then fire all animations together
+                    const preload = new Image();
+                    preload.onload = () => {
+                        if (loader) loader.classList.remove('active');
+
+                        galleryImage.src = preload.src;
+                        galleryImage.alt = page.title;
+
+                        contentTitle.textContent = `${page.title} / ${page.titleFr}`;
+                        const split = splitText(page.text);
+                        textBodyFr.innerHTML = renderParas(split.fr);
+                        textBodyEn.innerHTML = renderParas(split.en);
+
+                        reAnimate(galleryImage, 'anim-top');
+                        reAnimate(contentTitle.closest('.bg-white'), 'anim-right');
+                    };
+                    preload.src = `books/musculation/imago/${page.image}`;
 
                     document.querySelectorAll('.pagination-btn').forEach((btn, i) => {
                         btn.className = `pagination-btn px-3 py-1 rounded-full text-sm font-semibold transition ${i === currentIndex ? 'text-white' : 'bg-gray-200 text-gray-700'}`;
