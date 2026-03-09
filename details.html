@@ -40,6 +40,237 @@
         .anim-top    { animation: slideFromTop    0.45s cubic-bezier(0.4,0,0.2,1) both; }
         .anim-bottom { animation: slideFromBottom 0.45s cubic-bezier(0.4,0,0.2,1) both; }
         .anim-right  { animation: slideFromRight  0.45s cubic-bezier(0.4,0,0.2,1) both; }
+
+        /* ── Hero Banner ── */
+        .hero-musculation {
+            background: var(--navy);
+            position: relative;
+            overflow: hidden;
+            padding: 2.75rem 1.5rem 3.25rem;
+        }
+        .hero-musculation::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(200,151,58,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 10% 20%, rgba(255,255,255,0.03) 0%, transparent 60%);
+        }
+        /* Diagonal amber stripe */
+        .hero-musculation::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--amber) 0%, var(--gold) 100%);
+        }
+        .hero-inner {
+            max-width: 80rem;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .hero-eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 24px; height: 2px;
+            background: var(--amber);
+            border-radius: 2px;
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.75rem);
+            font-weight: 900;
+            color: #fff;
+            line-height: 1.05;
+            letter-spacing: -0.01em;
+        }
+        .hero-title span {
+            color: var(--amber);
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--slate-text);
+            margin-top: 0.65rem;
+            letter-spacing: 0.02em;
+        }
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            padding: 0 1.5rem;
+            border-left: 1px solid rgba(255,255,255,0.1);
+        }
+        .hero-stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .hero-stat-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--slate-text);
+        }
+        .hero-bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--amber) 0%, var(--gold) 50%, transparent 100%);
+        }
+
+        /* ── Main area background ── */
+        main {
+            background: linear-gradient(180deg, #1a2535 0%, #f3f4f6 90px) !important;
+        }
+
+        /* ── Media panels (image & video) ── */
+        /* Target the wrapper divs for image and video */
+        #book-content .flex-col > .flex-1.min-h-0:first-child {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+        }
+        #book-content .flex-col > .flex-1.min-h-0:first-child::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--amber), var(--gold));
+            z-index: 10;
+        }
+        #book-content .flex-col > .flex-1.min-h-0:last-child {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.28);
+        }
+        #book-content .flex-col > .flex-1.min-h-0:last-child::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--amber));
+            z-index: 10;
+        }
+
+        /* Image styling */
+        #gallery-image {
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: #0d1b2a;
+        }
+
+        /* Video styling */
+        #video-player {
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            background: #000;
+        }
+
+        /* ── Text panel ── */
+        #book-content .bg-white.p-8 {
+            border-radius: 14px !important;
+            border-left: 4px solid var(--amber) !important;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.1) !important;
+            padding: 2rem 2rem 2rem 1.75rem !important;
+        }
+
+        /* Title styling */
+        #content-title {
+            font-family: 'Playfair Display', serif !important;
+            font-size: 2rem !important;
+            font-weight: 900 !important;
+            color: var(--navy) !important;
+            margin-bottom: 1.25rem !important;
+            line-height: 1.15 !important;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(200,151,58,0.25);
+        }
+
+        /* Text body */
+        #text-body {
+            font-size: 0.93rem !important;
+            line-height: 1.75 !important;
+            color: #374151 !important;
+        }
+        #text-body p { margin-bottom: 0.75rem; }
+        #text-body p.underline {
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 0.92rem;
+            text-decoration: none !important;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        #text-body p.underline::before {
+            content: '';
+            display: inline-block;
+            width: 16px; height: 2px;
+            background: var(--amber);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        #text-body hr {
+            border-color: rgba(200,151,58,0.2) !important;
+            margin: 1rem 0 !important;
+        }
+
+        /* ── Pagination sidebar ── */
+        #pagination {
+            background: var(--navy);
+            border-radius: 12px;
+            padding: 0.75rem 0.4rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .pagination-btn {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 30px !important;
+            height: 30px !important;
+            border-radius: 8px !important;
+            font-size: 0.7rem !important;
+            font-weight: 700 !important;
+            transition: all 0.18s !important;
+            cursor: pointer !important;
+            border: none !important;
+        }
+        .pagination-btn:not([style*="background"]) {
+            background: rgba(255,255,255,0.08) !important;
+            color: rgba(255,255,255,0.5) !important;
+        }
+        .pagination-btn:not([style*="background"]):hover {
+            background: rgba(200,151,58,0.25) !important;
+            color: var(--amber) !important;
+        }
+        .pagination-btn[style*="background:var(--amber)"],
+        .pagination-btn[style*="background: var(--amber)"] {
+            box-shadow: 0 2px 10px rgba(200,151,58,0.4) !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -71,8 +302,30 @@
         </div>
     </nav>
 
+    <!-- Hero Banner -->
+    <div class="hero-musculation">
+        <div class="hero-inner px-4 sm:px-6 lg:px-8">
+            <div class="flex-1">
+                <div class="hero-eyebrow">Guide d'entraînement</div>
+                <h1 class="hero-title">Muscu<span>lation</span></h1>
+                <p class="hero-subtitle">Guide complet des exercices · 11 groupes musculaires</p>
+            </div>
+            <div class="hidden sm:flex items-center gap-0 ml-auto">
+                <div class="hero-stat">
+                    <span class="hero-stat-num">11</span>
+                    <span class="hero-stat-label">Exercices</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-num">FR</span>
+                    <span class="hero-stat-label">Bilingue</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bottom-bar"></div>
+    </div>
+
     <!-- Main Content -->
-    <main class="py-12">
+    <main class="py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div id="book-content">
                 <!-- Dynamic Content Goes Here -->
@@ -110,7 +363,7 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
-            const bookTitle = sessionStorage.getItem('selectedBook');
+            const bookTitle = sessionStorage.getItem('selectedBook') || 'Musculation';
             const book = books[bookTitle];
             const contentDiv = document.getElementById('book-content');
 
@@ -224,6 +477,11 @@
             } else {
                 contentDiv.innerHTML = '<p class="text-center text-xl">Livre non trouvé.</p>';
             }
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('active');
         });
     </script>
 </body>
